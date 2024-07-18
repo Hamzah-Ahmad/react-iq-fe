@@ -4,8 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import RegisterSchema, {
   RegisterSchemaType,
 } from "../schema/register.schema";
-import axios from "../../../shared/config/axios";
-import { useAuth } from "../../auth/hooks/useAuth";
+import axios from "shared/config/axios";
+import { useAuth } from "../hooks/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {

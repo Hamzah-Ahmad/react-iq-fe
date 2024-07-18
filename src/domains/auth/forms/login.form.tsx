@@ -2,9 +2,10 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import LoginSchema, { LoginSchemaType } from "../schema/login.schema";
-import axios from "../../../shared/config/axios";
-import { useAuth } from "../../auth/hooks/useAuth";
+import axios from "shared/config/axios";
+import { useAuth } from "domains/auth/hooks/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Button } from "shared/components/ui/button";
 
 const LoginForm = () => {
   const {
@@ -58,7 +59,7 @@ const LoginForm = () => {
         )}
       </div>
 
-      <button>Submit</button>
+      <Button>Submit</Button>
     </form>
   );
 };
