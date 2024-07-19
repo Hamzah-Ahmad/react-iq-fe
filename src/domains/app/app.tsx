@@ -8,6 +8,7 @@ import RequireAuth from "../auth/components/requireAuth";
 import Posts from "../posts/pages/posts.page";
 import useRefreshToken from "../auth/hooks/useRefreshToken";
 import useLogout from "../auth/hooks/useLogout";
+import Dashboard from "domains/dashboard/pages/dashboard.page";
 
 function App() {
   const refresh = useRefreshToken();
@@ -18,6 +19,7 @@ function App() {
         {/* Public Routes */}
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="dashboard" element={<Dashboard />} />
         <Route path="unauthorized" element={<div>Unauthorized</div>} />
 
         {/* Private route */}

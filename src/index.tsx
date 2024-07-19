@@ -12,10 +12,6 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <BrowserRouter>
-    <Link to="/login">Login </Link>
-    <Link to="/">Home </Link>
-    <Link to="/posts">Posts </Link>
-
     <AuthProvider>
       <CustomQueryClientProvider>
         <Routes>

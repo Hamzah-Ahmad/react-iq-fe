@@ -5,68 +5,57 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 47.4% 11.2%;
-
+    --foreground: 20 14.3% 4.1%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 47.4% 11.2%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 100% 50%;
-    --destructive-foreground: 210 40% 98%;
-
-    --ring: 215 20.2% 65.1%;
-
+    --card-foreground: 20 14.3% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14.3% 4.1%;
+    --primary: 24 9.8% 10%;
+    --primary-foreground: 60 9.1% 97.8%;
+    --secondary: 60 4.8% 95.9%;
+    --secondary-foreground: 24 9.8% 10%;
+    --muted: 60 4.8% 95.9%;
+    --muted-foreground: 25 5.3% 44.7%;
+    --accent: 60 4.8% 95.9%;
+    --accent-foreground: 24 9.8% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 20 5.9% 90%;
+    --input: 20 5.9% 90%;
+    --ring: 20 14.3% 4.1%;
     --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
   }
 
   .dark {
-    --background: 224 71% 4%;
-    --foreground: 213 31% 91%;
-
-    --muted: 223 47% 11%;
-    --muted-foreground: 215.4 16.3% 56.9%;
-
-    --popover: 224 71% 4%;
-    --popover-foreground: 215 20.2% 65.1%;
-
-    --card: 224 71% 4%;
-    --card-foreground: 213 31% 91%;
-
-    --border: 216 34% 17%;
-    --input: 216 34% 17%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 1.2%;
-
-    --secondary: 222.2 47.4% 11.2%;
-    --secondary-foreground: 210 40% 98%;
-
-    --accent: 216 34% 17%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
-
-    --ring: 216 34% 17%;
-
-    --radius: 0.5rem;
+    --background: 20 14.3% 4.1%;
+    --foreground: 60 9.1% 97.8%;
+    --card: 20 14.3% 4.1%;
+    --card-foreground: 60 9.1% 97.8%;
+    --popover: 20 14.3% 4.1%;
+    --popover-foreground: 60 9.1% 97.8%;
+    --primary: 60 9.1% 97.8%;
+    --primary-foreground: 24 9.8% 10%;
+    --secondary: 12 6.5% 15.1%;
+    --secondary-foreground: 60 9.1% 97.8%;
+    --muted: 12 6.5% 15.1%;
+    --muted-foreground: 24 5.4% 63.9%;
+    --accent: 12 6.5% 15.1%;
+    --accent-foreground: 60 9.1% 97.8%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 12 6.5% 15.1%;
+    --input: 12 6.5% 15.1%;
+    --ring: 24 5.7% 82.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
   }
 }
 
@@ -77,5 +66,236 @@
   body {
     @apply bg-background text-foreground;
     font-family: sans-serif;
+    max-height: 100vh;
+    overflow-y: hidden;
+  }
+}
+
+/* Sidebar styles */
+.btn__row {
+  display: flex;
+}
+
+.close__btn {
+  font-size: 20px;
+  color: #121212;
+  position: absolute;
+  right: 16px;
+  top: 24px;
+  background-color: transparent;
+  color: #f2f2f2;
+  outline: none;
+  border: 0;
+  cursor: pointer;
+  visibility: hidden;
+  font-weight: bolder;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.search__icon {
+  position: absolute;
+  left: 0;
+  color: #121212;
+  margin-left: 8px;
+}
+
+.sidebar {
+  min-height: 100vh;
+  width: 20%;
+  padding-top: 24px;
+  background-color: #121212;
+  /* background-color: red; */
+  z-index: 999;
+  position: relative;
+  /* color: #fff; */
+  transition: all 0.25s linear;
+}
+
+.sidebar__item {
+  position: relative;
+  border-bottom: 1px solid #f2f2f2;
+  color: #f2f2f2;
+  padding: 16px;
+  font-weight: bolder;
+}
+
+.sidebar__item__title {
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar__item.active {
+  background-color: #f2f2f2;
+  color: #121212;
+}
+.sidebar__item.active svg {
+  color: #121212;
+}
+
+.sidebar__item:last-of-type {
+  border-bottom: none;
+}
+
+.sidebar__item:hover {
+  background-color: #f2f2f2e0;
+  color: #121212;
+  font-weight: bolder;
+  cursor: pointer;
+}
+
+.sidebar__item svg {
+  color: #f2f2f2;
+}
+.sidebar__item:hover svg {
+  color: #121212;
+}
+
+.sidebar__items__list {
+  height: 55%;
+  overflow-y: auto;
+}
+
+.trash__btn,
+.check__btn,
+.cross__btn {
+  border-radius: 100%;
+  height: 32px;
+  width: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background: none;
+}
+
+.check__btn,
+.cross__btn {
+  width: 40px;
+}
+
+.trash__btn svg {
+  height: 40px;
+  width: 40px;
+}
+.check__btn svg,
+.cross__btn svg {
+  height: 40px;
+  width: 40px;
+}
+
+.trash__btn:hover svg,
+.cross__btn:hover svg {
+  color: red !important;
+}
+
+.check__btn:hover svg {
+  color: green !important;
+}
+
+@media only screen and (max-width: 1100px) {
+  .close__btn {
+    visibility: visible;
+  }
+
+  .sidebar {
+    position: absolute;
+    width: 100%;
+    padding-top: 48px;
+  }
+
+  .sidebar.collapsed {
+    transform: translateX(-100vw);
+  }
+
+  .sidebar__items__list {
+    height: 400px;
+    overflow-y: auto;
+  }
+}
+
+/* Dashboard Styles */
+.intro__section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.title {
+  font-size: 64px;
+  margin-bottom: 24px;
+}
+
+.subtitle {
+  font-size: 24px;
+  margin-bottom: 8px;
+  color: #121212b3;
+}
+
+.open__btn {
+  visibility: hidden;
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  margin-left: 8px;
+  margin-top: 8px;
+  cursor: pointer;
+  display: flex;
+}
+.page__container {
+  display: flex;
+}
+
+.note__section {
+  width: 100%;
+}
+
+@media only screen and (max-width: 1100px) {
+  /* .note__section {
+    opacity: 0.1;
+  } */
+  .open__btn {
+    visibility: visible;
+  }
+
+  .intro__section {
+    height: 50vh;
+  }
+
+  .title {
+    font-size: 48px;
+    margin-bottom: 24px;
+  }
+
+  .subtitle {
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: #121212b3;
+    text-align: center;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .title {
+    font-size: 24px;
+    margin-bottom: 24px;
+    padding: 0 16px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #121212b3;
+    padding: 0 16px;
   }
 }
