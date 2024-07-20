@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Sidebar from "../components/sidebar";
 import { MenuIcon } from "lucide-react";
+import Playground from "../components/playground";
 
 const Dashboard = () => {
   const [collapseSidebar, setCollapseSidebar] = useState(true);
@@ -20,16 +21,8 @@ const Dashboard = () => {
           <MenuIcon />
         </button>
 
-        <div className="intro__section">
-          {/* <div className="title">Welcome to LocalNotes!</div>
-          <div className="subtitle">
-            Click the <strong>Create</strong> button on the sidebar to create
-            your first note
-          </div>
-          <div className="subtitle">
-            All notes are saved automatically to your browser's storage
-          </div> */}
-          Test
+        <div className="content__section">
+          <Playground />
         </div>
       </div>
     </div>
