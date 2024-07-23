@@ -5,12 +5,19 @@ import { PostSchemaType } from "../schema/post.schema";
 
 const usePostQueries = () => {
   const queryClient = useQueryClient();
-  const { getPosts, createPost } = usePostService();
+  const { getPosts, getPostById, createPost } = usePostService();
 
   const useGetPosts = () => {
-    return useQuery<PostSchemaType[]>({
+    return useQuery({
       queryKey: ["posts"],
       queryFn: getPosts,
+    });
+  };
+
+  const useGetPostById = (id: string) => {
+    return useQuery({
+      queryKey: ["post", id],
+      queryFn: () => getPostById(id),
     });
   };
 
@@ -27,7 +34,7 @@ const usePostQueries = () => {
     });
   };
 
-  return { useGetPosts, useCreatePost };
+  return { useGetPosts, useGetPostById, useCreatePost };
 };
 
 export default usePostQueries;

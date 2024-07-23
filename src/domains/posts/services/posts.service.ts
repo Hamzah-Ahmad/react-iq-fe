@@ -15,7 +15,7 @@ const usePostService = () => {
   };
 
   const createPost = async (data: PostSchemaType) => {
-    const response = await axiosPrivate.post(`/posst`, data);
+    const response = await axiosPrivate.post(`/post`, data);
     return response.data;
   };
 

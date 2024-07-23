@@ -19,11 +19,11 @@ function App() {
         {/* Public Routes */}
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
-        <Route path="dashboard" element={<Dashboard />} />
         <Route path="unauthorized" element={<div>Unauthorized</div>} />
 
         {/* Private route */}
         <Route element={<PersistLogin />}>
+          <Route path="dashboard" element={<Dashboard />} />
           <Route element={<RequireAuth allowedRoles={["user"]} />}>
             <Route
               path="/"

@@ -1,24 +1,28 @@
-import CreatePostForm from "../forms/createPost.form";
+// import CreatePostForm from "../forms/createPost.form";
+import Comment from "../components/comment"
 import usePostsQuery from "../queries/posts.queries";
 
+const POST_ID = "241df4b1-e106-451c-9a5c-f6c416d70abe";
 const Posts = () => {
-  const { useGetPosts } = usePostsQuery();
-  const { data } = useGetPosts();
+  const { useGetPostById } = usePostsQuery();
+  const { data } = useGetPostById(POST_ID);
 
   return (
-    <main>
-      <h3>Posts</h3>
+    <main className="p-16">
+      <h3 className="text-primary">Posts</h3>
 
-      <ul>
-        {data?.map((post, indx) => (
-          <h6 key={post.title + indx}>{post.title}</h6>
-        ))}
-      </ul>
+      <strong>{data?.title}</strong>
 
       <div>
+        {data?.comments?.map((comment: any) => (
+          <Comment comment={comment} />
+        ))}
+      </div>
+
+      {/* <div>
         <div>Create Post</div>
         <CreatePostForm />
-      </div>
+      </div> */}
     </main>
   );
 };
