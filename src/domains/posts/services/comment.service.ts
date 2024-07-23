@@ -6,7 +6,6 @@ const useCommentService = () => {
   const auth = useAuth();
 
   const getCommentsByParentId = async (parentCommentId: string) => {
-    console.log("auth ", auth);
     const response = await axiosPrivate.get(
       `/comment/reply/${parentCommentId}`
     );

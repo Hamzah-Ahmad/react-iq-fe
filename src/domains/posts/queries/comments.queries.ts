@@ -53,9 +53,8 @@ const useCommentQueries = () => {
   const useDeleteComment = () => {
     return useMutation({
       mutationFn: (variables: any) => deleteComment(variables.commentId),
-      onSuccess: (data, variables) => {
+      onSuccess: (_, variables) => {
         // The following only works for root comments, not replies
-        console.log("Here");
         queryClient.setQueryData(
           [variables.isReply ? "replies" : "post", variables.rootId],
           (data: any) => {

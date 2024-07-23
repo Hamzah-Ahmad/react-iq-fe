@@ -22,7 +22,6 @@ const Comment = ({ comment }: { comment: any }) => {
       isReply: !!comment.parentId,
       rootId: comment.parentId || comment.postId,
     });
-    console.log(e.target?.commentInput?.value);
   }
 
   return (
