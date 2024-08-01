@@ -26,7 +26,7 @@ const Sidebar = ({ isOpen, toggleDrawer }: SidebarProps) => {
       {questionsList && (
         <ul>
           {questionsList.map((question) => (
-            <QuestionRow question={question} />
+            <QuestionRow question={question} key={question.id} />
           ))}
         </ul>
       )}

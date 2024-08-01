@@ -3,9 +3,9 @@ import { themes } from "prism-react-renderer";
 import { LiveProvider, LiveEditor, LivePreview } from "react-live";
 
 import { useAuth } from "domains/auth/hooks/useAuth";
-import useSubmissionQueries from "../queries/submission.query";
 import Sidebar from "../components/sidebar";
 import Description from "../components/description-section";
+import useSubmissionQueries from "domains/submissions/queries/submission.query";
 
 const DEFAULT_CODE = `
 // Placeholder code for reference

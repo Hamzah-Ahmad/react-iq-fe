@@ -1,14 +1,4 @@
-export type Submission = {
-  id: string;
-  code: string;
-  userId: string;
-  questionId: string;
-};
-
-export type CreateSubmissionDto = {
-  code: string;
-  questionId: string;
-};
+import { Submission } from "domains/submissions/types";
 
 export type Question = {
   description: string;
@@ -16,6 +6,7 @@ export type Question = {
   id: string;
   title: string;
   submissions: Submission[];
+  userSubmission?: Submission;
 };
 
 export type QuestionWithUserSubmission = Omit<Question, "submissions"> & {

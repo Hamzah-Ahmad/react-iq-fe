@@ -1,9 +1,7 @@
-import { useAuth } from "domains/auth/hooks/useAuth";
-import useAxiosPrivate from "../../../shared/hooks/useAxiosPrivate";
+import useAxiosPrivate from "shared/hooks/useAxiosPrivate";
 
 const useCommentService = () => {
   const axiosPrivate = useAxiosPrivate();
-  const auth = useAuth();
 
   const getCommentsByParentId = async (parentCommentId: string) => {
     const response = await axiosPrivate.get(
