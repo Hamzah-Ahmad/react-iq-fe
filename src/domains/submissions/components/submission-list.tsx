@@ -13,12 +13,11 @@ const SubmissionList = () => {
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error</div>;
-  console.log("==> ", data);
   return (
     <div className="pt-4">
       <Accordion type="single" collapsible className="flex flex-col gap-y-2">
         {data?.map((submission) => (
-          <SubmissionCard submission={submission} />
+          <SubmissionCard submission={submission} key={submission.id}/>
         ))}
       </Accordion>
     </div>

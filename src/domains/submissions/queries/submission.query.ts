@@ -1,11 +1,20 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useSubmissionService from "../../submissions/services/submission.services";
-import { CreateSubmissionDto, Submission, SubmissionWithLikes } from "../types";
+import {
+  CreateSubmissionDto,
+  Submission,
+  SubmissionWithLikes,
+  UpdateLikeDto,
+} from "../types";
 
 const useSubmissionQueries = () => {
   const queryClient = useQueryClient();
-  const { createSubmission, getAllSubmissions, getUserSubmission } =
-    useSubmissionService();
+  const {
+    createSubmission,
+    getAllSubmissions,
+    getUserSubmission,
+    updateLikeOnSubmission,
+  } = useSubmissionService();
 
   const useCreateSubmission = () => {
     return useMutation({
@@ -14,8 +23,10 @@ const useSubmissionQueries = () => {
           code: variables.code,
           questionId: variables.questionId,
         }),
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["posts"] });
+      onSuccess: (_, variables) => {
+        queryClient.invalidateQueries({
+          queryKey: ["submissions", variables.questionId],
+        });
       },
       onError: (error: any) => {
         console.log("Error: ", error);
@@ -45,7 +56,62 @@ const useSubmissionQueries = () => {
     });
   };
 
-  return { useCreateSubmission, useGetAllSubmissions, useGetUserSubmission };
+  const useUpdateLikeOnSubmission = () => {
+    return useMutation({
+      mutationFn: (
+        variables: UpdateLikeDto & { questionId: string; userId: string }
+      ) => updateLikeOnSubmission({ submissionId: variables.submissionId }),
+
+      onMutate: async (variables) => {
+        const queryKey = ["submissions", variables.questionId];
+        await queryClient.cancelQueries({
+          queryKey: queryKey,
+        });
+
+        let previousData =
+          queryClient.getQueryData<SubmissionWithLikes[]>(queryKey);
+
+        if (previousData) {
+          previousData = previousData.map((submission) => {
+            if (submission.id !== variables.submissionId) return submission;
+            let likes = submission.likes;
+
+            if (likes.map((user) => user.id).includes(variables.userId)) {
+              // likes is referencing submission.likes. The statement below will change that so that it refers to a new array.
+              // likes = likes.filter(
+              //   (userLiked) => userLiked.id !== variables.userId
+              // );
+              submission.likes = likes.filter(
+                (userLiked) => userLiked.id !== variables.userId
+              );
+            } else {
+              likes.push({ id: variables.userId });
+            }
+            return submission;
+          });
+        }
+        queryClient.setQueryData(queryKey, previousData);
+        return { previousData };
+      },
+      onError: (err, variables, context) => {
+        queryClient.setQueryData(
+          ["submissions", variables.questionId],
+          context?.previousData
+        );
+        console.log(err);
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries({ queryKey: ["todos"] });
+      },
+    });
+  };
+
+  return {
+    useCreateSubmission,
+    useGetAllSubmissions,
+    useGetUserSubmission,
+    useUpdateLikeOnSubmission,
+  };
 };
 
 export default useSubmissionQueries;

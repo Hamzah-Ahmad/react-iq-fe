@@ -1,5 +1,5 @@
 import useAxiosPrivate from "shared/hooks/useAxiosPrivate";
-import { CreateSubmissionDto } from "../types";
+import { CreateSubmissionDto, UpdateLikeDto } from "../types";
 
 const useSubmissionService = () => {
   const axiosPrivate = useAxiosPrivate();
@@ -13,7 +13,6 @@ const useSubmissionService = () => {
     const response = await axiosPrivate.get(`/submission/${questionId}`);
     return response.data;
   };
-  
   const createSubmission = async (data: CreateSubmissionDto) => {
     const response = await axiosPrivate.post(`/submission/${data.questionId}`, {
       code: data.code,
@@ -21,8 +20,19 @@ const useSubmissionService = () => {
     return response.data;
   };
 
-  //   return { getPosts, getPostById, createPost };
-  return { createSubmission, getAllSubmissions, getUserSubmission };
+  const updateLikeOnSubmission = async (data: UpdateLikeDto) => {
+    const response = await axiosPrivate.post(
+      `/submission/${data.submissionId}/like`
+    );
+    return response.data;
+  };
+
+  return {
+    createSubmission,
+    getAllSubmissions,
+    getUserSubmission,
+    updateLikeOnSubmission,
+  };
 };
 
 export default useSubmissionService;

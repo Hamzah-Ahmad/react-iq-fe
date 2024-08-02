@@ -25,11 +25,9 @@ const Description = () => {
   const selectedQuestion = questions?.find(
     (question) => question.id === searchParams.get("questionId")
   );
-  console.log(selectedQuestion);
 
-  const { title, description, submissions, userSubmission } =
+  const { title, description } =
     selectedQuestion || {};
-  console.log(submissions, userSubmission);
 
   return (
     <div className="bg-muted description">

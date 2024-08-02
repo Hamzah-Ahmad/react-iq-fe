@@ -1,3 +1,5 @@
+import { User } from "domains/auth/types";
+
 export type Submission = {
   id: string;
   code: string;
@@ -9,9 +11,13 @@ export type Submission = {
   };
 };
 
-export type SubmissionWithLikes = Submission & { likes: string[] };
+export type SubmissionWithLikes = Submission & { likes: { id: string }[] };
 
 export type CreateSubmissionDto = {
   code: string;
   questionId: string;
+};
+
+export type UpdateLikeDto = {
+  submissionId: string;
 };
