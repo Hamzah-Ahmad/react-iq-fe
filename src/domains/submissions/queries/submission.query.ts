@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useSubmissionService from "../../submissions/services/submission.services";
-import { CreateSubmissionDto, Submission } from "../types";
+import { CreateSubmissionDto, Submission, SubmissionWithLikes } from "../types";
 
 const useSubmissionQueries = () => {
   const queryClient = useQueryClient();
@@ -38,7 +38,7 @@ const useSubmissionQueries = () => {
     questionId: string,
     enabled: boolean = false
   ) => {
-    return useQuery<Submission[]>({
+    return useQuery<SubmissionWithLikes[]>({
       queryKey: ["submissions", questionId],
       queryFn: () => getAllSubmissions(questionId),
       enabled: enabled,

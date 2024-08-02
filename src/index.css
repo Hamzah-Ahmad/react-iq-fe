@@ -126,8 +126,7 @@
     @apply text-foreground;
     background-color: hsl(240 10% 3.9%);
     font-family: sans-serif;
-    /* max-height: 100vh; */
-    /* overflow-y: hidden; */
+
   }
 }
 

@@ -1,6 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import useSubmissionQueries from "../queries/submission.query";
 import SubmissionCard from "./submission-card";
+import { Accordion } from "@radix-ui/react-accordion";
 const SubmissionList = () => {
   const { useGetAllSubmissions } = useSubmissionQueries();
   const [searchParams] = useSearchParams();
@@ -15,9 +16,11 @@ const SubmissionList = () => {
   console.log("==> ", data);
   return (
     <div className="pt-4">
-      {data?.map((submission) => (
-        <SubmissionCard submission={submission} />
-      ))}
+      <Accordion type="single" collapsible className="flex flex-col gap-y-2">
+        {data?.map((submission) => (
+          <SubmissionCard submission={submission} />
+        ))}
+      </Accordion>
     </div>
   );
 };
