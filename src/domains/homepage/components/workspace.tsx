@@ -6,6 +6,7 @@ import { useAuth } from "domains/auth/hooks/useAuth";
 import Description from "domains/question/components/description-section";
 import useSubmissionQueries from "domains/submissions/queries/submission.query";
 import { useSearchParams } from "react-router-dom";
+import { Button } from "shared/components/ui/button";
 
 const DEFAULT_CODE = `
 // Placeholder code for reference
@@ -45,6 +46,13 @@ const Workspace = () => {
     !!auth?.accessToken
   );
 
+  function submitCode() {
+    createSubmission({
+      code: code,
+      questionId: questionId,
+    });
+  }
+  console.log(submitCode);
   const userCode = userSubmissionData?.code;
   useEffect(() => {
     if (userCode) {
@@ -53,30 +61,27 @@ const Workspace = () => {
   }, [userCode]);
 
   return (
-    <div className="px-2 py-8">
+    <div className="px-4">
       <LiveProvider code={userSubmissionData?.code || code} noInline>
         <div className="grid grid-cols-3 gap-4 homepage">
           <Description />
-
           <LiveEditor
             className="font-mono editor"
             theme={themes.duotoneDark}
             onChange={setCode}
           />
+
           <LivePreview className="bg-foreground preview" />
         </div>
       </LiveProvider>
-
-      <button
-        onClick={() =>
-          createSubmission({
-            code: code,
-            questionId: questionId,
-          })
-        }
-      >
-        Submit
-      </button>
+      <div className="grid grid-cols-3 gap-4 homepage">
+        <Button
+          onClick={submitCode}
+          className="bg-primary w-fit col-start-2 justify-self-end mt-3"
+        >
+          Submit
+        </Button>
+      </div>
     </div>
   );
 };
