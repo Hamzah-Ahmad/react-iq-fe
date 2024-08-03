@@ -33,7 +33,7 @@ const SubmissionCard = ({
   };
   return (
     <AccordionItem value={submission.id}>
-      <AccordionTrigger className="bg-primary p-2 rounded- hover:no-underline">
+      <AccordionTrigger className="bg-primary p-2 rounded- hover:no-underline rounded-sm">
         <div className="flex w-4/5 justify-between items-center">
           <p>{submission.user.name}</p>
 
