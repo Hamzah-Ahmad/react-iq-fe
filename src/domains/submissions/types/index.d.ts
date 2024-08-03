@@ -11,7 +11,7 @@ export type Submission = {
   };
 };
 
-export type SubmissionWithLikes = Submission & { likes: { id: string }[] };
+export type SubmissionWithLikes = Submission & { likes: string[] };
 
 export type CreateSubmissionDto = {
   code: string;

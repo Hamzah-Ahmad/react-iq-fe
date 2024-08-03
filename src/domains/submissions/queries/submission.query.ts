@@ -78,16 +78,16 @@ const useSubmissionQueries = () => {
             if (submission.id !== variables.submissionId) return submission;
             let likes = submission.likes;
 
-            if (likes.map((user) => user.id).includes(variables.userId)) {
+            if (likes.includes(variables.userId)) {
               // likes is referencing submission.likes. The statement below will change that so that it refers to a new array.
               // likes = likes.filter(
               //   (userLiked) => userLiked.id !== variables.userId
               // );
               submission.likes = likes.filter(
-                (userLiked) => userLiked.id !== variables.userId
+                (userId) => userId !== variables.userId
               );
             } else {
-              likes.push({ id: variables.userId });
+              likes.push(variables.userId );
             }
             return submission;
           });

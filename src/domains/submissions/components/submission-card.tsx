@@ -10,6 +10,7 @@ import { StarIcon } from "lucide-react";
 import useSubmissionQueries from "../queries/submission.query";
 import { useAuth } from "domains/auth/hooks/useAuth";
 import { MouseEvent } from "react";
+import { cn } from "shared/lib/utils";
 
 const SubmissionCard = ({
   submission,
@@ -38,8 +39,20 @@ const SubmissionCard = ({
 
           <div className="flex items-center">
             <span className="text-sm">{submission.likes?.length}</span>
-            <div role="button" tabIndex={0} className="px-2" onClick={updateLike}>
-              <StarIcon className="h-5 w-5 hover:fill-orange-300 hover:text-orange-300" />
+            <div
+              role="button"
+              tabIndex={0}
+              className="px-2"
+              onClick={updateLike}
+            >
+              <StarIcon
+                className={cn(
+                  "h-5 w-5 hover:fill-slate-400 hover:text-slate-400",
+                  submission.likes?.includes(auth?.user?.id)
+                    ? "fill-neutral-200"
+                    : "fill-transparent"
+                )}
+              />
             </div>
           </div>
         </div>
