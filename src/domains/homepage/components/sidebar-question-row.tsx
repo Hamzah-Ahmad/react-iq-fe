@@ -1,7 +1,7 @@
 import { Square, SquareCheck } from "lucide-react";
-import { QuestionWithUserSubmission } from "../types";
+import { QuestionWithUserSubmission } from "domains/question/components";
 
-const QuestionRow = ({
+const SidebarQuestionRow = ({
   question,
 }: {
   question: QuestionWithUserSubmission;
@@ -16,4 +16,4 @@ const QuestionRow = ({
   );
 };
 
-export default QuestionRow;
+export default SidebarQuestionRow;

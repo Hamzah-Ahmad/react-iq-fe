@@ -42,6 +42,7 @@ const useSubmissionQueries = () => {
       queryKey: ["user_submission", questionId],
       queryFn: () => getUserSubmission(questionId),
       enabled: enabled,
+      refetchOnWindowFocus: false
     });
   };
 
@@ -53,6 +54,7 @@ const useSubmissionQueries = () => {
       queryKey: ["submissions", questionId],
       queryFn: () => getAllSubmissions(questionId),
       enabled: enabled,
+      refetchOnWindowFocus: false
     });
   };
 

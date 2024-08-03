@@ -1,11 +1,20 @@
+import axios from "shared/config/axios";
 import useAxiosPrivate from "../../../shared/hooks/useAxiosPrivate";
-import { QuestionWithUserSubmission } from "../types";
+import {
+  Question,
+  QuestionWithUserSubmission,
+} from "domains/question/components";
 
 const useQuestionsService = () => {
   const axiosPrivate = useAxiosPrivate();
 
   const getAllQuestions = async (): Promise<QuestionWithUserSubmission[]> => {
     const response = await axiosPrivate.get(`/question`);
+    return response.data;
+  };
+
+  const getQuestionById = async (questionId: string): Promise<Question> => {
+    const response = await axios.get(`/question/${questionId}`);
     return response.data;
   };
 
@@ -22,7 +31,7 @@ const useQuestionsService = () => {
   //   };
 
   //   return { getPosts, getPostById, createPost };
-  return { getAllQuestions };
+  return { getAllQuestions, getQuestionById };
 };
 
 export default useQuestionsService;

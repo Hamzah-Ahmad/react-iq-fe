@@ -1,8 +1,8 @@
 import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";
-import useQuestionQueries from "../queries/question.query";
-import QuestionRow from "./question-row";
+import SidebarQuestionRow from "./sidebar-question-row";
 import { useAuth } from "domains/auth/hooks/useAuth";
+import useQuestionQueries from "domains/question/queries/question.query";
 
 type SidebarProps = {
   isOpen: boolean;
@@ -12,7 +12,6 @@ type SidebarProps = {
 const Sidebar = ({ isOpen, toggleDrawer }: SidebarProps) => {
   const { auth } = useAuth();
   const { useGetAllQuestions } = useQuestionQueries();
-
   const { data: questionsList } = useGetAllQuestions(!!auth?.accessToken);
 
   return (
@@ -26,7 +25,7 @@ const Sidebar = ({ isOpen, toggleDrawer }: SidebarProps) => {
       {questionsList && (
         <ul>
           {questionsList.map((question) => (
-            <QuestionRow question={question} key={question.id} />
+            <SidebarQuestionRow question={question} key={question.id} />
           ))}
         </ul>
       )}

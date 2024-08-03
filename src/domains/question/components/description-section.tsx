@@ -1,8 +1,5 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 
-import { Question } from "../types";
-import { useAuth } from "domains/auth/hooks/useAuth";
 import {
   Tabs,
   TabsContent,
@@ -10,27 +7,28 @@ import {
   TabsTrigger,
 } from "shared/components/ui/tabs";
 import SubmissionList from "domains/submissions/components/submission-list";
+import useQuestionQueries from "../queries/question.query";
 
+const Wrapper = ({ children }: { children: React.ReactElement | string }) => (
+  <div className="bg-muted description">{children}</div>
+);
 const Description = () => {
   const [searchParams] = useSearchParams();
-  const queryClient = useQueryClient();
 
-  const { auth } = useAuth();
+  const { useGetQuestionById } = useQuestionQueries();
 
-  const questions = queryClient.getQueryData<Question[]>([
-    "questions",
-    !!auth?.accessToken,
-  ]);
+  const {
+    data: question,
+    isLoading,
+    isError,
+  } = useGetQuestionById(searchParams.get("questionId") || "");
 
-  const selectedQuestion = questions?.find(
-    (question) => question.id === searchParams.get("questionId")
-  );
-
-  const { title, description } =
-    selectedQuestion || {};
+  if (isLoading) return <Wrapper>Loading question</Wrapper>;
+  if (isError) return <Wrapper>Something went wrong</Wrapper>;
+  const { title, description } = question || {};
 
   return (
-    <div className="bg-muted description">
+    <Wrapper>
       <Tabs defaultValue="description" className="p-8">
         <TabsList className="w-full bg-popover-foreground">
           <TabsTrigger value="description" className="w-full tab">
@@ -41,18 +39,16 @@ const Description = () => {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="description">
-          {!selectedQuestion ? null : (
-            <div className="pt-4">
-              <h4 className="text-xl">{title}</h4>
-              <p className="text-md mt-6">{description}</p>
-            </div>
-          )}
+          <div className="pt-4">
+            <h4 className="text-xl">{title}</h4>
+            <p className="text-md mt-6">{description}</p>
+          </div>
         </TabsContent>
         <TabsContent value="submissions">
           <SubmissionList />
         </TabsContent>
       </Tabs>
-    </div>
+    </Wrapper>
   );
 };
 
