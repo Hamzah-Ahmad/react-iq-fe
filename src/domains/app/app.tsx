@@ -8,7 +8,7 @@ import RequireAuth from "../auth/components/requireAuth";
 import Posts from "../posts/pages/posts.page";
 import useRefreshToken from "../auth/hooks/useRefreshToken";
 import useLogout from "../auth/hooks/useLogout";
-import Dashboard from "domains/dashboard/pages/dashboard.page";
+import Homepage from "domains/homepage/pages/homepage.page";
 
 function App() {
   const refresh = useRefreshToken();
@@ -23,7 +23,7 @@ function App() {
 
         {/* Private route */}
         <Route element={<PersistLogin />}>
-          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="/homepage" element={<Homepage />} />
           <Route element={<RequireAuth allowedRoles={["user"]} />}>
             <Route
               path="/"

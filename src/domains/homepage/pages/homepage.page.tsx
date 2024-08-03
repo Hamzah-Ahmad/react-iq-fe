@@ -33,7 +33,7 @@ const Counter = (props: Props) => {
 render(<Counter label="Counter" />)    
 `;
 const QUESTION_ID_PLACEHOLDER = "24ba8f8c-40b1-46ee-9330-445498069666";
-const Dashboard = () => {
+const Homepage = () => {
   const { auth } = useAuth();
   const [code, setCode] = useState(DEFAULT_CODE);
   const { useCreateSubmission, useGetUserSubmission } = useSubmissionQueries();
@@ -54,7 +54,7 @@ const Dashboard = () => {
       <Sidebar isOpen={isOpen} toggleDrawer={toggleDrawer} />
       <div className="px-2 py-8">
         <LiveProvider code={userSubmissionData?.code || code} noInline>
-          <div className="grid grid-cols-3 gap-4 dashboard">
+          <div className="grid grid-cols-3 gap-4 homepage">
             <Description />
 
             <LiveEditor
@@ -81,4 +81,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Homepage;
