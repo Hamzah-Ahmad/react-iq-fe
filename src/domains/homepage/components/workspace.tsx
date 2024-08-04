@@ -52,7 +52,6 @@ const Workspace = () => {
       questionId: questionId,
     });
   }
-  console.log(submitCode);
   const userCode = userSubmissionData?.code;
   useEffect(() => {
     if (userCode) {

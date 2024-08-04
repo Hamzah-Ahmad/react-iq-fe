@@ -3,6 +3,13 @@ import useAxiosPrivate from "shared/hooks/useAxiosPrivate";
 const useCommentService = () => {
   const axiosPrivate = useAxiosPrivate();
 
+  const getCommentsBySubmisison = async (submissionId: string) => {
+    const response = await axiosPrivate.get(
+      `/comment/submission/${submissionId}`
+    );
+    return response.data;
+  };
+
   const getCommentsByParentId = async (parentCommentId: string) => {
     const response = await axiosPrivate.get(
       `/comment/reply/${parentCommentId}`
@@ -28,7 +35,7 @@ const useCommentService = () => {
     });
     return response.data;
   };
-  return { getCommentsByParentId, updateComment, deleteComment, createComment };
+  return { getCommentsByParentId, getCommentsBySubmisison, updateComment, deleteComment, createComment };
 };
 
 export default useCommentService;

@@ -28,7 +28,7 @@ const useSubmissionService = () => {
   };
 
   const getSubmissionById = async (submissionId: string) => {
-    const response = await axiosPrivate.get(`/submission/${submissionId}`);
+    const response = await axiosPrivate.get(`/submission/byId/${submissionId}`);
     return response.data;
   };
 

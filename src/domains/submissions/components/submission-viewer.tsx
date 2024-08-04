@@ -17,7 +17,7 @@ const SubmissionSidebar = () => {
       open={!!shouldOpen}
       onClose={closeViewer}
       direction="right"
-      className="!bg-card !w-4/5 py-8"
+      className="!bg-card !w-4/5 py-8 px-10 overflow-y-auto custom-scroll"
     >
       <SubmissionContent submissionId={submissionId} />
     </Drawer>

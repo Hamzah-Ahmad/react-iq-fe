@@ -63,7 +63,7 @@ const useSubmissionQueries = () => {
     submissionId: string,
     enabled: boolean = false
   ) => {
-    return useQuery<Partial<SubmissionWithLikesAndCommentCount>[]>({
+    return useQuery<Submission>({
       queryKey: ["submission", submissionId],
       queryFn: () => getSubmissionById(submissionId),
       enabled: enabled,

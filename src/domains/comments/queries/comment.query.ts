@@ -1,17 +1,33 @@
 // src/domains/user/queries/useUserQueries.js
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useCommentService from "../services/comment.service";
+import { Comment } from "../types";
 
 const useCommentQueries = () => {
   const queryClient = useQueryClient();
-  const { getCommentsByParentId, updateComment, deleteComment, createComment } =
-    useCommentService();
+  const {
+    getCommentsByParentId,
+    getCommentsBySubmisison,
+    updateComment,
+    deleteComment,
+    createComment,
+  } = useCommentService();
 
   const useGetReplies = (parentCommentId: string) => {
-    return useQuery({
+    return useQuery<Comment[]>({
       queryKey: ["replies", parentCommentId],
       queryFn: () => getCommentsByParentId(parentCommentId),
-      enabled: false,
+    });
+  };
+
+  const useGetCommentsBySubmissions = (
+    submissionId: string,
+    enabled: boolean
+  ) => {
+    return useQuery<Comment[]>({
+      queryKey: ["comments", "submission", submissionId],
+      queryFn: () => getCommentsBySubmisison(submissionId),
+      enabled: enabled,
     });
   };
 
@@ -121,6 +137,7 @@ const useCommentQueries = () => {
     useUpdateComment,
     useDeleteComment,
     useCreateComment,
+    useGetCommentsBySubmissions,
   };
 };
 
