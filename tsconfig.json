@@ -16,7 +16,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": "src",
-    // "noUnusedLocals": true,
+    "noUnusedLocals": true,
   },
   "include": [
     "src",

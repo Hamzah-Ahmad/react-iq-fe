@@ -2,6 +2,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useCommentService from "../services/comment.service";
 import { Comment } from "../types";
+import useLazyQuery from "shared/hooks/useLazyQuery";
 
 const useCommentQueries = () => {
   const queryClient = useQueryClient();
@@ -13,11 +14,13 @@ const useCommentQueries = () => {
     createComment,
   } = useCommentService();
 
+  // React Query does not provide a native useLazyQuery function. So the initial idea was to set enable to false for this query, and call the refetch function to manualy call the API.
+  // A better solution was to implement a custom useLaxyQuery hook
   const useGetReplies = (parentCommentId: string) => {
-    return useQuery<Comment[]>({
-      queryKey: ["replies", parentCommentId],
-      queryFn: () => getCommentsByParentId(parentCommentId),
-    });
+    return useLazyQuery<Comment[]>(
+      () => getCommentsByParentId(parentCommentId),
+      ["replies", parentCommentId]
+    );
   };
 
   const useGetCommentsBySubmissions = (

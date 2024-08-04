@@ -5,7 +5,11 @@ import { Comment as CommentType } from "../types";
 const Comment = ({ comment }: { comment: CommentType }) => {
   const { useGetReplies, useUpdateComment, useDeleteComment } =
     useCommentQueries();
-  const { data: replyData, refetch } = useGetReplies(comment.id);
+  const { data, error, isLoading, fetch } = useGetReplies(
+    comment.id
+  );
+
+  console.log("data: ", { data, error, isLoading });
 
   const { mutate: updateComment } = useUpdateComment(toggleIsEditing);
   const { mutate: deleteComment } = useDeleteComment();
@@ -46,9 +50,7 @@ const Comment = ({ comment }: { comment: CommentType }) => {
           Edit
         </button>
       }
-      {comment.replyCount && (
-        <button onClick={() => refetch()}>Load Replies</button>
-      )}
+      {comment.replyCount && <button onClick={fetch}>Load Replies</button>}
 
       <button
         onClick={() =>
@@ -63,11 +65,11 @@ const Comment = ({ comment }: { comment: CommentType }) => {
         Delete
       </button>
 
-      {replyData?.map((reply) => (
+      {/* {replyData?.map((reply) => (
         <div className="ml-10" key={reply.id}>
           <Comment comment={reply} />
         </div>
-      ))}
+      ))} */}
     </div>
   );
 };

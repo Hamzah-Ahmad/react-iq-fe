@@ -11,7 +11,7 @@ const useCommentQueries = () => {
     return useQuery({
       queryKey: ["replies", parentCommentId],
       queryFn: () => getCommentsByParentId(parentCommentId),
-      enabled: false,
+      enabled: false, // setting enabled to false to avoid fetching replies initially. The refetch function extracted from the useQuery hook will be used to call this query
     });
   };
 
@@ -116,7 +116,12 @@ const useCommentQueries = () => {
     });
   };
 
-  return { useGetReplies, useUpdateComment, useDeleteComment, useCreateComment };
+  return {
+    useGetReplies,
+    useUpdateComment,
+    useDeleteComment,
+    useCreateComment,
+  };
 };
 
 export default useCommentQueries;
