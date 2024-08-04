@@ -13,6 +13,7 @@ const useSubmissionQueries = () => {
     createSubmission,
     getAllSubmissions,
     getUserSubmission,
+    getSubmissionById,
     updateLikeOnSubmission,
   } = useSubmissionService();
 
@@ -58,11 +59,23 @@ const useSubmissionQueries = () => {
     });
   };
 
+  const useGetSubmissionById = (
+    submissionId: string,
+    enabled: boolean = false
+  ) => {
+    return useQuery<Partial<SubmissionWithLikesAndCommentCount>[]>({
+      queryKey: ["submission", submissionId],
+      queryFn: () => getSubmissionById(submissionId),
+      enabled: enabled,
+      refetchOnWindowFocus: false,
+    });
+  };
+
   const useUpdateLikeOnSubmission = () => {
     return useMutation({
       mutationFn: (
         variables: UpdateLikeDto & { questionId: string; userId: string }
-      ) => updateLikeOnSubmission({ submissionId: variables.submissionId }),
+      ) => updateLikeOnSubmission(variables.submissionId),
 
       onMutate: async (variables) => {
         const queryKey = ["submissions", variables.questionId];
@@ -114,6 +127,7 @@ const useSubmissionQueries = () => {
     useCreateSubmission,
     useGetAllSubmissions,
     useGetUserSubmission,
+    useGetSubmissionById,
     useUpdateLikeOnSubmission,
   };
 };

@@ -2,7 +2,7 @@ import { useState } from "react";
 import Sidebar from "../components/sidebar";
 import Workspace from "../components/workspace";
 import { Button } from "shared/components/ui/button";
-import SubmissionViewer from "domains/submissions/components/submission-viewer";
+import SubmissionViewer from "domains/submissions/components/submission-viewer"
 
 const Homepage = () => {
   const [isOpen, setIsOpen] = useState(false);
