@@ -156,6 +156,11 @@
   }
 }
 
+.align {
+  display: flex;
+  align-items: center;
+}
+
 .tab[data-state="active"] {
   background-color: hsl(262.1 83.3% 57.8%) !important;
 }

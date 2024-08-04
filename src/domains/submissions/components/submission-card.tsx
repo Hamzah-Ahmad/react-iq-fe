@@ -4,9 +4,9 @@ import {
   AccordionTrigger,
 } from "shared/components/ui/accordion";
 
-import { SubmissionWithLikes } from "../types";
+import { SubmissionWithLikesAndCommentCount } from "../types";
 import { LiveEditor, LiveProvider } from "react-live";
-import { StarIcon } from "lucide-react";
+import { MessageSquareIcon, StarIcon } from "lucide-react";
 import useSubmissionQueries from "../queries/submission.query";
 import { useAuth } from "domains/auth/hooks/useAuth";
 import { MouseEvent } from "react";
@@ -15,7 +15,7 @@ import { cn } from "shared/lib/utils";
 const SubmissionCard = ({
   submission,
 }: {
-  submission: SubmissionWithLikes;
+  submission: SubmissionWithLikesAndCommentCount;
 }) => {
   const { useUpdateLikeOnSubmission } = useSubmissionQueries();
 
@@ -34,11 +34,10 @@ const SubmissionCard = ({
   return (
     <AccordionItem value={submission.id}>
       <AccordionTrigger className="bg-primary p-2 rounded- hover:no-underline rounded-sm">
-        <div className="flex w-4/5 justify-between items-center">
+        <div className="flex w-11/12 justify-between items-center">
           <p>{submission.user.name}</p>
 
-          <div className="flex items-center">
-            <span className="text-sm">{submission.likes?.length}</span>
+          <div className="align">
             <div
               role="button"
               tabIndex={0}
@@ -54,6 +53,12 @@ const SubmissionCard = ({
                 )}
               />
             </div>
+            <span className="text-sm">{submission.likes?.length}</span>
+
+            <div role="button" tabIndex={0} className="px-2 ml-4" onClick={() => {}}>
+              <MessageSquareIcon className={cn("h-5 w-5")} />
+            </div>
+            <span className="text-sm">{submission.commentCount}</span>
           </div>
         </div>
       </AccordionTrigger>

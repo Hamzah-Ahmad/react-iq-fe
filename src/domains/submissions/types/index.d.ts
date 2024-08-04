@@ -11,7 +11,10 @@ export type Submission = {
   };
 };
 
-export type SubmissionWithLikes = Submission & { likes: string[] };
+export type SubmissionWithLikesAndCommentCount = Submission & {
+  likes: string[];
+  commentCount: number;
+};
 
 export type CreateSubmissionDto = {
   code: string;

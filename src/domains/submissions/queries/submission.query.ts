@@ -1,9 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import useSubmissionService from "../../submissions/services/submission.services";
+import useSubmissionService from "../services/submission.service";
 import {
   CreateSubmissionDto,
   Submission,
-  SubmissionWithLikes,
+  SubmissionWithLikesAndCommentCount,
   UpdateLikeDto,
 } from "../types";
 
@@ -42,7 +42,7 @@ const useSubmissionQueries = () => {
       queryKey: ["user_submission", questionId],
       queryFn: () => getUserSubmission(questionId),
       enabled: enabled,
-      refetchOnWindowFocus: false
+      refetchOnWindowFocus: false,
     });
   };
 
@@ -50,11 +50,11 @@ const useSubmissionQueries = () => {
     questionId: string,
     enabled: boolean = false
   ) => {
-    return useQuery<SubmissionWithLikes[]>({
+    return useQuery<SubmissionWithLikesAndCommentCount[]>({
       queryKey: ["submissions", questionId],
       queryFn: () => getAllSubmissions(questionId),
       enabled: enabled,
-      refetchOnWindowFocus: false
+      refetchOnWindowFocus: false,
     });
   };
 
@@ -71,7 +71,9 @@ const useSubmissionQueries = () => {
         });
 
         let previousData =
-          queryClient.getQueryData<SubmissionWithLikes[]>(queryKey);
+          queryClient.getQueryData<SubmissionWithLikesAndCommentCount[]>(
+            queryKey
+          );
 
         if (previousData) {
           previousData = previousData.map((submission) => {
@@ -87,7 +89,7 @@ const useSubmissionQueries = () => {
                 (userId) => userId !== variables.userId
               );
             } else {
-              likes.push(variables.userId );
+              likes.push(variables.userId);
             }
             return submission;
           });
