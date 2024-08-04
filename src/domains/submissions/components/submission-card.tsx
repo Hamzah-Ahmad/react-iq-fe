@@ -10,13 +10,15 @@ import { MessageSquareIcon, StarIcon } from "lucide-react";
 import useSubmissionQueries from "../queries/submission.query";
 import { useAuth } from "domains/auth/hooks/useAuth";
 import { MouseEvent } from "react";
-import { cn } from "shared/lib/utils";
+import { cn, updateQueryParams } from "shared/lib/utils";
+import { useSearchParams } from "react-router-dom";
 
 const SubmissionCard = ({
   submission,
 }: {
   submission: SubmissionWithLikesAndCommentCount;
 }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const { useUpdateLikeOnSubmission } = useSubmissionQueries();
 
   const { mutate } = useUpdateLikeOnSubmission();
@@ -31,6 +33,13 @@ const SubmissionCard = ({
       userId: auth?.user?.id,
     });
   };
+
+  const viewSubmission = async (e: MouseEvent<Element>) => {
+    e.stopPropagation();
+    const newParams: Record<string, string> = { submission: submission.id };
+    updateQueryParams(searchParams, setSearchParams, newParams)
+  };
+
   return (
     <AccordionItem value={submission.id}>
       <AccordionTrigger className="bg-primary p-2 rounded- hover:no-underline rounded-sm">
@@ -55,7 +64,12 @@ const SubmissionCard = ({
             </div>
             <span className="text-sm">{submission.likes?.length}</span>
 
-            <div role="button" tabIndex={0} className="px-2 ml-4" onClick={() => {}}>
+            <div
+              role="button"
+              tabIndex={0}
+              className="px-2 ml-4"
+              onClick={viewSubmission}
+            >
               <MessageSquareIcon className={cn("h-5 w-5")} />
             </div>
             <span className="text-sm">{submission.commentCount}</span>
