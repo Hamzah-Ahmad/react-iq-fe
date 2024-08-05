@@ -1,15 +1,14 @@
 import { useState } from "react";
 import useCommentQueries from "../queries/comment.query";
 import { Comment as CommentType } from "../types";
+import { useAuth } from "domains/auth/hooks/useAuth";
 
 const Comment = ({ comment }: { comment: CommentType }) => {
+  const { auth, isLoggedIn } = useAuth();
+  const userId = auth?.user?.id;
   const { useGetReplies, useUpdateComment, useDeleteComment } =
     useCommentQueries();
-  const { data, error, isLoading, fetch } = useGetReplies(
-    comment.id
-  );
-
-  console.log("data: ", { data, error, isLoading });
+  const { data: replies, fetch: fetchReplies } = useGetReplies(comment.id);
 
   const { mutate: updateComment } = useUpdateComment(toggleIsEditing);
   const { mutate: deleteComment } = useDeleteComment();
@@ -17,6 +16,14 @@ const Comment = ({ comment }: { comment: CommentType }) => {
   const [isEditing, setIsEditing] = useState(false);
   function toggleIsEditing() {
     setIsEditing(!isEditing);
+  }
+
+  const [showReplyForm, setShowReplyForm] = useState(false);
+  function toggleReplyform() {
+    if (!showReplyForm) {
+      fetchReplies();
+    }
+    setShowReplyForm(!showReplyForm);
   }
 
   function handleSubmit(e: any) {
@@ -37,7 +44,7 @@ const Comment = ({ comment }: { comment: CommentType }) => {
             rows={2}
             name="commentInput"
             defaultValue={comment.commentText}
-            className="p-2 border-2 border-red-500"
+            className="p-2 border-2 border-red-500 text-muted w-3/4"
           />
           <button>Save</button>
         </form>
@@ -45,31 +52,47 @@ const Comment = ({ comment }: { comment: CommentType }) => {
         <div>{comment.commentText}</div>
       )}
 
-      {
-        <button className="mr-4" onClick={() => setIsEditing(!isEditing)}>
-          Edit
-        </button>
-      }
-      {comment.replyCount && <button onClick={fetch}>Load Replies</button>}
+      {showReplyForm && (
+        <form onSubmit={() => {}}>
+          <textarea
+            rows={2}
+            name="commentInput"
+            className="p-2 border-2 border-red-500 text-muted w-3/4"
+          />
+          <button>Reply</button>
+        </form>
+      )}
 
-      <button
-        onClick={() =>
-          deleteComment({
-            commentId: comment.id,
-            isReply: !!comment.parentId,
-            rootId: comment.parentId || comment.submissionId,
-          })
-        }
-        className="ml-4"
-      >
-        Delete
-      </button>
+      {!showReplyForm && (
+        <div className="flex gap-x-3">
+          {isLoggedIn && <button onClick={toggleReplyform}>Reply</button>}
+          {userId === comment.authorId && (
+            <button onClick={() => setIsEditing(!isEditing)}>Edit</button>
+          )}
+          {comment.replyCount && (
+            <button onClick={fetchReplies}>Load Replies</button>
+          )}
+          {userId === comment.authorId && (
+            <button
+              onClick={() =>
+                deleteComment({
+                  commentId: comment.id,
+                  isReply: !!comment.parentId,
+                  rootId: comment.parentId || comment.submissionId,
+                })
+              }
+            >
+              Delete
+            </button>
+          )}
+        </div>
+      )}
 
-      {/* {replyData?.map((reply) => (
+      {replies?.map((reply) => (
         <div className="ml-10" key={reply.id}>
           <Comment comment={reply} />
         </div>
-      ))} */}
+      ))}
     </div>
   );
 };

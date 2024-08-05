@@ -62,7 +62,7 @@ const Workspace = () => {
   return (
     <div className="px-4">
       <LiveProvider code={code} noInline>
-        <div className="grid grid-cols-3 gap-4 homepage">
+        <div className="grid grid-cols-3 gap-4 workspace">
           <Description />
           <LiveEditor
             className="font-mono editor"
