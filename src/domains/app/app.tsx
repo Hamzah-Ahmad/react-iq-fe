@@ -5,7 +5,6 @@ import Login from "../auth/pages/login.page";
 import Layout from "./components/Layout";
 import PersistLogin from "../auth/components/persistLogin";
 import RequireAuth from "../auth/components/requireAuth";
-import Posts from "../posts/pages/posts.page";
 import useRefreshToken from "../auth/hooks/useRefreshToken";
 import useLogout from "../auth/hooks/useLogout";
 import Homepage from "domains/homepage/pages/homepage.page";
@@ -37,7 +36,6 @@ function App() {
             <Route path="lounge" element={<div>Lounge</div>} />
             <Route path="admin" element={<div>Admin</div>} />
             {/* <Route path="user" element={<Users />} /> */}
-            <Route path="posts" element={<Posts />} />
             <Route path="unauthorized" element={<div>Unauthorized</div>} />
           </Route>
         </Route>
