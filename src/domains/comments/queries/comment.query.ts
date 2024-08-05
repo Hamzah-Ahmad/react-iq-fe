@@ -12,6 +12,7 @@ const useCommentQueries = () => {
     updateComment,
     deleteComment,
     createComment,
+    replyToComment,
   } = useCommentService();
 
   // React Query does not provide a native useLazyQuery function. So the initial idea was to set enable to false for this query, and call the refetch function to manualy call the API.
@@ -19,7 +20,7 @@ const useCommentQueries = () => {
   const useGetReplies = (parentCommentId: string) => {
     return useLazyQuery<Comment[]>(
       () => getCommentsByParentId(parentCommentId),
-      ["replies", parentCommentId]
+      ["comments", "replies", parentCommentId]
     );
   };
 
@@ -39,29 +40,43 @@ const useCommentQueries = () => {
       mutationFn: (variables: any) =>
         updateComment(variables.commentText, variables.commentId),
       onSuccess: (data, variables) => {
-        // The following only works for root comments, not replies
         if (successCb) successCb();
         queryClient.setQueryData(
-          [variables.isReply ? "replies" : "submission", variables.rootId],
+          [
+            "comments",
+            variables.isReply ? "replies" : "submission",
+            variables.rootId,
+          ],
           (data: any) => {
-            if (variables.isReply) {
-              return data.map((comment: any) => {
-                if (comment.id === variables.commentId) {
-                  return { ...comment, commentText: variables.commentText };
-                } else return comment;
-              });
-            } else {
-              return {
-                ...data,
-                comments: data.comments?.map((comment: any) => {
-                  if (comment.id === variables.commentId) {
-                    return { ...comment, commentText: variables.commentText };
-                  } else return comment;
-                }),
-              };
-            }
+            console.log("data ==> ", data);
+            return data.map((comment: any) => {
+              if (comment.id === variables.commentId) {
+                return { ...comment, commentText: variables.commentText };
+              } else return comment;
+            });
           }
         );
+      },
+      onError: (error: any) => {
+        console.log("Error: ", error);
+      },
+    });
+  };
+
+  const useReplyToComment = () => {
+    return useMutation({
+      mutationFn: (variables: any) =>
+        replyToComment(variables.commentText, variables.rootId),
+      onSuccess: (_, variables) => {
+        // queryClient.setQueryData(
+        //   [variables.isReply ? "replies" : "submission", variables.rootId],
+        //   (data: any) => {
+        //     return data.filter((comment: any) => {
+        //       if (comment.id === variables.commentId) return false;
+        //       return true;
+        //     });
+        //   }
+        // );
       },
       onError: (error: any) => {
         console.log("Error: ", error);
@@ -73,24 +88,17 @@ const useCommentQueries = () => {
     return useMutation({
       mutationFn: (variables: any) => deleteComment(variables.commentId),
       onSuccess: (_, variables) => {
-        // The following only works for root comments, not replies
         queryClient.setQueryData(
-          [variables.isReply ? "replies" : "submission", variables.rootId],
+          [
+            "comments",
+            variables.isReply ? "replies" : "submission",
+            variables.rootId,
+          ],
           (data: any) => {
-            if (variables.isReply) {
-              return data.filter((comment: any) => {
-                if (comment.id === variables.commentId) return false;
-                return true;
-              });
-            } else {
-              return {
-                ...data,
-                comments: data.comments?.filter((comment: any) => {
-                  if (comment.id === variables.commentId) return false;
-                  return true;
-                }),
-              };
-            }
+            return data.filter((comment: any) => {
+              if (comment.id === variables.commentId) return false;
+              return true;
+            });
           }
         );
       },
@@ -140,6 +148,7 @@ const useCommentQueries = () => {
     useUpdateComment,
     useDeleteComment,
     useCreateComment,
+    useReplyToComment,
     useGetCommentsBySubmissions,
   };
 };

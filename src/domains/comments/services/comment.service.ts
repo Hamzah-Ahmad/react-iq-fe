@@ -35,7 +35,21 @@ const useCommentService = () => {
     });
     return response.data;
   };
-  return { getCommentsByParentId, getCommentsBySubmisison, updateComment, deleteComment, createComment };
+
+  const replyToComment = async (replyBody: string, parentId: string) => {
+    const response = await axiosPrivate.post(`/comment/reply/${parentId}`, {
+      replyBody,
+    });
+    return response.data;
+  };
+  return {
+    getCommentsByParentId,
+    getCommentsBySubmisison,
+    updateComment,
+    deleteComment,
+    createComment,
+    replyToComment,
+  };
 };
 
 export default useCommentService;
