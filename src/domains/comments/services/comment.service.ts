@@ -38,7 +38,7 @@ const useCommentService = () => {
 
   const replyToComment = async (replyBody: string, parentId: string) => {
     const response = await axiosPrivate.post(`/comment/reply/${parentId}`, {
-      replyBody,
+      commentText: replyBody,
     });
     return response.data;
   };

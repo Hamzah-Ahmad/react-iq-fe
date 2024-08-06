@@ -20,7 +20,7 @@ const useCommentQueries = () => {
   const useGetReplies = (parentCommentId: string) => {
     return useLazyQuery<Comment[]>(
       () => getCommentsByParentId(parentCommentId),
-      ["comments", "replies", parentCommentId]
+      ["comments", parentCommentId]
     );
   };
 
@@ -29,7 +29,7 @@ const useCommentQueries = () => {
     enabled: boolean
   ) => {
     return useQuery<Comment[]>({
-      queryKey: ["comments", "submission", submissionId],
+      queryKey: ["comments", submissionId],
       queryFn: () => getCommentsBySubmisison(submissionId),
       enabled: enabled,
     });
@@ -44,12 +44,10 @@ const useCommentQueries = () => {
         queryClient.setQueryData(
           [
             "comments",
-            variables.isReply ? "replies" : "submission",
             variables.rootId,
           ],
-          (data: any) => {
-            console.log("data ==> ", data);
-            return data.map((comment: any) => {
+          (currData: any) => {
+            return currData.map((comment: any) => {
               if (comment.id === variables.commentId) {
                 return { ...comment, commentText: variables.commentText };
               } else return comment;
@@ -67,16 +65,22 @@ const useCommentQueries = () => {
     return useMutation({
       mutationFn: (variables: any) =>
         replyToComment(variables.commentText, variables.rootId),
-      onSuccess: (_, variables) => {
-        // queryClient.setQueryData(
-        //   [variables.isReply ? "replies" : "submission", variables.rootId],
-        //   (data: any) => {
-        //     return data.filter((comment: any) => {
-        //       if (comment.id === variables.commentId) return false;
-        //       return true;
-        //     });
-        //   }
-        // );
+      onSuccess: (data, variables) => {
+        console.log("LOG - onSuccess : ", { data });
+        queryClient.setQueryData(
+          [
+            "comments",
+            variables.rootId,
+          ],
+          (currData: any) => {
+            console.log("LOG - setQueryData : ", { data, currData });
+            if (currData) {
+              return [...currData, data];
+            } else {
+              return [data];
+            }
+          }
+        );
       },
       onError: (error: any) => {
         console.log("Error: ", error);
@@ -91,11 +95,10 @@ const useCommentQueries = () => {
         queryClient.setQueryData(
           [
             "comments",
-            variables.isReply ? "replies" : "submission",
             variables.rootId,
           ],
-          (data: any) => {
-            return data.filter((comment: any) => {
+          (currData: any) => {
+            return currData.filter((comment: any) => {
               if (comment.id === variables.commentId) return false;
               return true;
             });
@@ -116,24 +119,27 @@ const useCommentQueries = () => {
         // The following only works for root comments, not replies
         if (successCb) successCb();
         queryClient.setQueryData(
-          [variables.isReply ? "replies" : "submission", variables.rootId],
-          (data: any) => {
-            if (variables.isReply) {
-              return data.map((comment: any) => {
-                if (comment.id === variables.commentId) {
-                  return { ...comment, commentText: variables.commentText };
-                } else return comment;
-              });
-            } else {
-              return {
-                ...data,
-                comments: data.comments?.map((comment: any) => {
-                  if (comment.id === variables.commentId) {
-                    return { ...comment, commentText: variables.commentText };
-                  } else return comment;
-                }),
-              };
-            }
+          [
+            "comments",
+            variables.rootId,
+          ],
+          (currData: any) => {
+            // if (variables.isReply) {
+            return currData.map((comment: any) => {
+              if (comment.id === variables.commentId) {
+                return { ...comment, commentText: variables.commentText };
+              } else return comment;
+            });
+            // } else {
+            //   return {
+            //     ...currData,
+            //     comments: currData.comments?.map((comment: any) => {
+            //       if (comment.id === variables.commentId) {
+            //         return { ...comment, commentText: variables.commentText };
+            //       } else return comment;
+            //     }),
+            //   };
+            // }
           }
         );
       },

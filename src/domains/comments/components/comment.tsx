@@ -6,12 +6,17 @@ import { useAuth } from "domains/auth/hooks/useAuth";
 const Comment = ({ comment }: { comment: CommentType }) => {
   const { auth, isLoggedIn } = useAuth();
   const userId = auth?.user?.id;
-  const { useGetReplies, useUpdateComment, useDeleteComment } =
-    useCommentQueries();
+  const {
+    useGetReplies,
+    useUpdateComment,
+    useDeleteComment,
+    useReplyToComment,
+  } = useCommentQueries();
   const { data: replies, fetch: fetchReplies } = useGetReplies(comment.id);
 
   const { mutate: updateComment } = useUpdateComment(toggleIsEditing);
   const { mutate: deleteComment } = useDeleteComment();
+  const { mutate: replyToComment } = useReplyToComment();
 
   const [isEditing, setIsEditing] = useState(false);
   function toggleIsEditing() {
@@ -36,6 +41,16 @@ const Comment = ({ comment }: { comment: CommentType }) => {
     });
   }
 
+  function handleReply(e: any) {
+    e.preventDefault();
+    replyToComment({
+      commentText: e.target?.replyInput?.value,
+      commentId: comment.id,
+      rootId: comment.id,
+      isParentRootComment: !comment.parentId,
+    });
+  }
+
   return (
     <div className="mb-16 mt-8">
       {isEditing ? (
@@ -53,10 +68,10 @@ const Comment = ({ comment }: { comment: CommentType }) => {
       )}
 
       {showReplyForm && (
-        <form onSubmit={() => {}}>
+        <form onSubmit={handleReply}>
           <textarea
             rows={2}
-            name="commentInput"
+            name="replyInput"
             className="p-2 border-2 border-red-500 text-muted w-3/4"
           />
           <button>Reply</button>
