@@ -19,3 +19,12 @@ export type Comment = {
   updatedDate: string;
   replyCount?: number | null;
 };
+
+export type CommentWithAuthor = Comment & {
+  author: {
+    email: string;
+    id: string;
+    name: string;
+    role: string;
+  };
+};

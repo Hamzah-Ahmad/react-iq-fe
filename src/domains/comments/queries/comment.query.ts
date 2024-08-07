@@ -1,7 +1,7 @@
 // src/domains/user/queries/useUserQueries.js
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useCommentService from "../services/comment.service";
-import { Comment } from "../types";
+import { CommentWithAuthor } from "../types";
 import useLazyQuery from "shared/hooks/useLazyQuery";
 
 const useCommentQueries = () => {
@@ -18,7 +18,7 @@ const useCommentQueries = () => {
   // React Query does not provide a native useLazyQuery function. So the initial idea was to set enable to false for this query, and call the refetch function to manualy call the API.
   // A better solution was to implement a custom useLaxyQuery hook
   const useGetReplies = (parentCommentId: string) => {
-    return useLazyQuery<Comment[]>(
+    return useLazyQuery<CommentWithAuthor[]>(
       () => getCommentsByParentId(parentCommentId),
       ["comments", parentCommentId]
     );
@@ -28,7 +28,7 @@ const useCommentQueries = () => {
     submissionId: string,
     enabled: boolean
   ) => {
-    return useQuery<Comment[]>({
+    return useQuery<CommentWithAuthor[]>({
       queryKey: ["comments", submissionId],
       queryFn: () => getCommentsBySubmisison(submissionId),
       enabled: enabled,
@@ -42,10 +42,7 @@ const useCommentQueries = () => {
       onSuccess: (data, variables) => {
         if (successCb) successCb();
         queryClient.setQueryData(
-          [
-            "comments",
-            variables.rootId,
-          ],
+          ["comments", variables.rootId],
           (currData: any) => {
             return currData.map((comment: any) => {
               if (comment.id === variables.commentId) {
@@ -68,10 +65,7 @@ const useCommentQueries = () => {
       onSuccess: (data, variables) => {
         console.log("LOG - onSuccess : ", { data });
         queryClient.setQueryData(
-          [
-            "comments",
-            variables.rootId,
-          ],
+          ["comments", variables.rootId],
           (currData: any) => {
             console.log("LOG - setQueryData : ", { data, currData });
             if (currData) {
@@ -93,10 +87,7 @@ const useCommentQueries = () => {
       mutationFn: (variables: any) => deleteComment(variables.commentId),
       onSuccess: (_, variables) => {
         queryClient.setQueryData(
-          [
-            "comments",
-            variables.rootId,
-          ],
+          ["comments", variables.rootId],
           (currData: any) => {
             return currData.filter((comment: any) => {
               if (comment.id === variables.commentId) return false;
@@ -119,10 +110,7 @@ const useCommentQueries = () => {
         // The following only works for root comments, not replies
         if (successCb) successCb();
         queryClient.setQueryData(
-          [
-            "comments",
-            variables.rootId,
-          ],
+          ["comments", variables.rootId],
           (currData: any) => {
             // if (variables.isReply) {
             return currData.map((comment: any) => {
