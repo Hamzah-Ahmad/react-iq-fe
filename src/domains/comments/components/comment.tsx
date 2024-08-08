@@ -69,12 +69,18 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
                 rows={2}
                 defaultValue={comment.commentText}
               />
-              <Button
-                variant="ghost"
-                className="absolute top-1/3 pt-2 right-4 py-0"
-              >
-                Save
-              </Button>
+              <div className="absolute top-1/3 pt-2 right-4 py-0 flex">
+                <Button
+                  variant="ghost"
+                  type="button"
+                  onClick={() => setIsEditing(false)}
+                >
+                  Cancel
+                </Button>
+                <Button variant="ghost" type="submit">
+                  Save
+                </Button>
+              </div>
             </div>
           </form>
         ) : (
@@ -82,63 +88,78 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
         )}
       </div>
 
-      <div className="pt-2">
-        {/* {!showReplyForm && ( */}
-        <div className="flex gap-x-3">
-          {isLoggedIn && (
-            <Button
-              variant="ghost"
-              className="px-0 pr-2 pt-0 text-xs hover:bg-transparent hover:underline"
-              onClick={toggleReplyform}
-            >
-              {showReplyForm ? "Cancel" : "Reply"}
-            </Button>
-          )}
-          {userId === comment.authorId && (
-            <Button
-              variant="ghost"
-              className="px-0 pr-2 pt-0 text-xs hover:bg-transparent hover:underline"
-              onClick={() => setIsEditing(!isEditing)}
-            >
-              Edit
-            </Button>
-          )}
-          {/* Display Load Replies button if there is reply count and replies haven't been loaded yet */}
-          {comment.replyCount && !replies ? (
-            <Button
-              variant="ghost"
-              className="px-0 pr-2 pt-0 text-xs hover:bg-transparent hover:underline"
-              onClick={fetchReplies}
-            >
-              View Replies
-            </Button>
-          ) : null}
-          {userId === comment.authorId && (
-            <Button
-              variant="ghost"
-              className="px-0 pr-2 pt-0 text-xs hover:bg-transparent hover:underline"
-              onClick={() =>
-                deleteComment({
-                  commentId: comment.id,
-                  rootId: comment.parentId || comment.submissionId,
-                })
-              }
-            >
-              Delete
-            </Button>
+      {!isEditing && (
+        <div className="pt-2">
+          {/* {!showReplyForm && ( */}
+          <div className="flex gap-x-3">
+            {isLoggedIn && (
+              <Button
+                variant="ghost"
+                className="px-0 pr-2 pt-0 text-xs hover:bg-transparent hover:underline"
+                onClick={toggleReplyform}
+              >
+                Reply
+              </Button>
+            )}
+            {userId === comment.authorId && (
+              <Button
+                variant="ghost"
+                className="px-0 pr-2 pt-0 text-xs hover:bg-transparent hover:underline"
+                onClick={() => setIsEditing(!isEditing)}
+              >
+                Edit
+              </Button>
+            )}
+            {/* Display Load Replies button if there is reply count and replies haven't been loaded yet */}
+            {comment.replyCount && !replies ? (
+              <Button
+                variant="ghost"
+                className="px-0 pr-2 pt-0 text-xs hover:bg-transparent hover:underline"
+                onClick={fetchReplies}
+              >
+                View Replies
+              </Button>
+            ) : null}
+            {userId === comment.authorId && (
+              <Button
+                variant="ghost"
+                className="px-0 pr-2 pt-0 text-xs hover:bg-transparent hover:underline"
+                onClick={() =>
+                  deleteComment({
+                    commentId: comment.id,
+                    rootId: comment.parentId || comment.submissionId,
+                  })
+                }
+              >
+                Delete
+              </Button>
+            )}
+          </div>
+          {/* )}  */}
+
+          {showReplyForm && (
+            <form onSubmit={handleReply} className="relative">
+              <Textarea
+                rows={2}
+                name="replyInput"
+                className="no-resize mb-10"
+              />
+              <div className="absolute top-1/3 pt-2 right-4">
+                <Button
+                  variant="ghost"
+                  type="button"
+                  onClick={() => setShowReplyForm(false)}
+                >
+                  Cancel
+                </Button>
+                <Button variant="ghost" type="submit">
+                  Comment
+                </Button>
+              </div>
+            </form>
           )}
         </div>
-        {/* )}  */}
-
-        {showReplyForm && (
-          <form onSubmit={handleReply} className="relative">
-            <Textarea rows={2} name="replyInput" className="no-resize mb-10" />
-            <Button variant="ghost" className="absolute top-1/3 pt-2 right-4">
-              Comment
-            </Button>
-          </form>
-        )}
-      </div>
+      )}
       {replies?.map((reply) => (
         <div className="ml-10" key={reply.id}>
           <Comment comment={reply} />
