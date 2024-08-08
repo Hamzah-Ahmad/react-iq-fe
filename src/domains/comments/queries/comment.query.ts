@@ -3,9 +3,11 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useCommentService from "../services/comment.service";
 import { CommentWithAuthor } from "../types";
 import useLazyQuery from "shared/hooks/useLazyQuery";
+import { useAuth } from "domains/auth/hooks/useAuth";
 
 const useCommentQueries = () => {
   const queryClient = useQueryClient();
+  const { auth } = useAuth();
   const {
     getCommentsByParentId,
     getCommentsBySubmisison,
@@ -37,14 +39,17 @@ const useCommentQueries = () => {
 
   const useUpdateComment = (successCb?: () => void) => {
     return useMutation({
-      mutationFn: (variables: any) =>
-        updateComment(variables.commentText, variables.commentId),
+      mutationFn: (variables: {
+        commentText: string;
+        commentId: string;
+        rootId: string;
+      }) => updateComment(variables.commentText, variables.commentId),
       onSuccess: (data, variables) => {
         if (successCb) successCb();
         queryClient.setQueryData(
           ["comments", variables.rootId],
-          (currData: any) => {
-            return currData.map((comment: any) => {
+          (currData: CommentWithAuthor[]) => {
+            return currData.map((comment) => {
               if (comment.id === variables.commentId) {
                 return { ...comment, commentText: variables.commentText };
               } else return comment;
@@ -60,18 +65,17 @@ const useCommentQueries = () => {
 
   const useReplyToComment = () => {
     return useMutation({
-      mutationFn: (variables: any) =>
+      mutationFn: (variables: { commentText: string; rootId: string }) =>
         replyToComment(variables.commentText, variables.rootId),
       onSuccess: (data, variables) => {
-        console.log("LOG - onSuccess : ", { data });
         queryClient.setQueryData(
           ["comments", variables.rootId],
-          (currData: any) => {
-            console.log("LOG - setQueryData : ", { data, currData });
+          (currData: CommentWithAuthor[]) => {
             if (currData) {
-              return [...currData, data];
+              console.log("==> ", data, auth?.user);
+              return [{ ...data, author: auth?.user }, ...currData];
             } else {
-              return [data];
+              return [{ ...data, author: auth?.user }];
             }
           }
         );
@@ -84,12 +88,13 @@ const useCommentQueries = () => {
 
   const useDeleteComment = () => {
     return useMutation({
-      mutationFn: (variables: any) => deleteComment(variables.commentId),
+      mutationFn: (variables: { commentId: string; rootId: string }) =>
+        deleteComment(variables.commentId),
       onSuccess: (_, variables) => {
         queryClient.setQueryData(
           ["comments", variables.rootId],
-          (currData: any) => {
-            return currData.filter((comment: any) => {
+          (currData: CommentWithAuthor[]) => {
+            return currData.filter((comment) => {
               if (comment.id === variables.commentId) return false;
               return true;
             });
@@ -104,30 +109,18 @@ const useCommentQueries = () => {
 
   const useCreateComment = (successCb?: () => void) => {
     return useMutation({
-      mutationFn: (variables: any) =>
+      mutationFn: (variables: { submissionId: string; commentText: string }) =>
         createComment(variables.submissionId, variables.commentText),
       onSuccess: (data, variables) => {
-        // The following only works for root comments, not replies
         if (successCb) successCb();
         queryClient.setQueryData(
-          ["comments", variables.rootId],
-          (currData: any) => {
-            // if (variables.isReply) {
-            return currData.map((comment: any) => {
-              if (comment.id === variables.commentId) {
-                return { ...comment, commentText: variables.commentText };
-              } else return comment;
-            });
-            // } else {
-            //   return {
-            //     ...currData,
-            //     comments: currData.comments?.map((comment: any) => {
-            //       if (comment.id === variables.commentId) {
-            //         return { ...comment, commentText: variables.commentText };
-            //       } else return comment;
-            //     }),
-            //   };
-            // }
+          ["comments", variables.submissionId],
+          (currData: CommentWithAuthor[]) => {
+            if (currData) {
+              return [{ ...data, author: auth?.user }, ...currData];
+            } else {
+              return [{ ...data, author: auth?.user }];
+            }
           }
         );
       },

@@ -38,7 +38,6 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
     updateComment({
       commentText: e.target?.commentInput?.value,
       commentId: comment.id,
-      isReply: !!comment.parentId,
       rootId: comment.parentId || comment.submissionId,
     });
   }
@@ -47,15 +46,13 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
     e.preventDefault();
     replyToComment({
       commentText: e.target?.replyInput?.value,
-      commentId: comment.id,
       rootId: comment.id,
-      isParentRootComment: !comment.parentId,
     });
   }
 
   return (
-    <div className="mb-16 mt-8">
-      <div className="border-2 border-primary-foreground p-2 rounded-md">
+    <div className="my-2">
+      <div className="border-1 border-muted-foreground rounded-md">
         <div className="font-extrabold">{comment.author?.name}</div>
         {isEditing ? (
           <form onSubmit={handleSubmit}>
@@ -68,11 +65,14 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
             <div className="relative">
               <Textarea
                 name="commentInput"
-                className="my-2"
+                className="my-2 no-resize"
                 rows={2}
                 defaultValue={comment.commentText}
               />
-              <Button variant="ghost" className="absolute top-1/3 pt-2 right-4 py-0">
+              <Button
+                variant="ghost"
+                className="absolute top-1/3 pt-2 right-4 py-0"
+              >
                 Save
               </Button>
             </div>
@@ -120,7 +120,6 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
               onClick={() =>
                 deleteComment({
                   commentId: comment.id,
-                  isReply: !!comment.parentId,
                   rootId: comment.parentId || comment.submissionId,
                 })
               }
@@ -133,7 +132,7 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
 
         {showReplyForm && (
           <form onSubmit={handleReply} className="relative">
-            <Textarea rows={2} name="replyInput" />
+            <Textarea rows={2} name="replyInput" className="no-resize mb-10" />
             <Button variant="ghost" className="absolute top-1/3 pt-2 right-4">
               Comment
             </Button>
