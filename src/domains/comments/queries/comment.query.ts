@@ -63,11 +63,12 @@ const useCommentQueries = () => {
     });
   };
 
-  const useReplyToComment = () => {
+  const useReplyToComment = (successCb?: () => void) => {
     return useMutation({
       mutationFn: (variables: { commentText: string; rootId: string }) =>
         replyToComment(variables.commentText, variables.rootId),
       onSuccess: (data, variables) => {
+        if (successCb) successCb();
         queryClient.setQueryData(
           ["comments", variables.rootId],
           (currData: CommentWithAuthor[]) => {
@@ -141,3 +142,5 @@ const useCommentQueries = () => {
 };
 
 export default useCommentQueries;
+
+

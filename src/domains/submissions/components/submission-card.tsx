@@ -6,6 +6,7 @@ import {
 
 import { SubmissionWithLikesAndCommentCount } from "../types";
 import { LiveEditor, LiveProvider } from "react-live";
+import { themes } from "prism-react-renderer";
 import { MessageSquareIcon, StarIcon } from "lucide-react";
 import useSubmissionQueries from "../queries/submission.query";
 import { useAuth } from "domains/auth/hooks/useAuth";
@@ -37,7 +38,7 @@ const SubmissionCard = ({
   const viewSubmission = async (e: MouseEvent<Element>) => {
     e.stopPropagation();
     const newParams: Record<string, string> = { submission: submission.id };
-    updateQueryParams(searchParams, setSearchParams, newParams)
+    updateQueryParams(searchParams, setSearchParams, newParams);
   };
 
   return (
@@ -78,7 +79,7 @@ const SubmissionCard = ({
       </AccordionTrigger>
       <AccordionContent>
         <LiveProvider code={submission.code} noInline>
-          <LiveEditor className="font-mono editor" />
+          <LiveEditor className="font-mono editor" theme={themes.vsDark} />
         </LiveProvider>
       </AccordionContent>
     </AccordionItem>

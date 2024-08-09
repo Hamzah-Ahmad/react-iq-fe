@@ -66,7 +66,9 @@ const Workspace = () => {
           <Description />
           <LiveEditor
             className="font-mono editor"
-            theme={themes.duotoneDark}
+            theme={themes.vsDark}
+            // theme={themes.jettwaveDark}
+            // theme={themes.nightOwl}
             onChange={setCode}
           />
 
@@ -76,7 +78,7 @@ const Workspace = () => {
       <div className="grid grid-cols-3 gap-4 homepage">
         <Button
           onClick={submitCode}
-          className="bg-primary w-fit col-start-2 justify-self-end mt-3"
+          className="bg-primary w-fit col-start-2 justify-self-end mt-3 text-secondary-foreground"
         >
           Submit
         </Button>

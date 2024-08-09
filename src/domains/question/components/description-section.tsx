@@ -10,7 +10,9 @@ import SubmissionList from "domains/submissions/components/submission-list";
 import useQuestionQueries from "../queries/question.query";
 
 const Wrapper = ({ children }: { children: React.ReactElement | string }) => (
-  <div className="bg-muted description">{children}</div>
+  <div className="bg-background text-muted-foreground description">
+    {children}
+  </div>
 );
 const Description = () => {
   const [searchParams] = useSearchParams();
@@ -30,7 +32,7 @@ const Description = () => {
   return (
     <Wrapper>
       <Tabs defaultValue="description" className="p-8">
-        <TabsList className="w-full bg-popover-foreground">
+        <TabsList className="tabs-container">
           <TabsTrigger value="description" className="w-full tab">
             Description
           </TabsTrigger>

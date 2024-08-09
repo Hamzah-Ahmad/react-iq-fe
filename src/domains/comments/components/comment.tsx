@@ -16,10 +16,6 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
   } = useCommentQueries();
   const { data: replies, fetch: fetchReplies } = useGetReplies(comment.id);
 
-  const { mutate: updateComment } = useUpdateComment(toggleIsEditing);
-  const { mutate: deleteComment } = useDeleteComment();
-  const { mutate: replyToComment } = useReplyToComment();
-
   const [isEditing, setIsEditing] = useState(false);
   function toggleIsEditing() {
     setIsEditing(!isEditing);
@@ -32,6 +28,12 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
     }
     setShowReplyForm(!showReplyForm);
   }
+
+  const { mutate: updateComment } = useUpdateComment(toggleIsEditing);
+  const { mutate: deleteComment } = useDeleteComment();
+  const { mutate: replyToComment } = useReplyToComment(() =>
+    setShowReplyForm(false)
+  );
 
   function handleSubmit(e: any) {
     e.preventDefault();
