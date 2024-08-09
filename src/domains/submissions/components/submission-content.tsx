@@ -34,7 +34,6 @@ const SubmissionContent = ({
   //   if(!submissionId ||)
   return (
     <div>
-      <p>{submission?.user?.name}</p>
       <LiveProvider code={submission?.code} noInline>
         <LiveEditor className="font-mono rounded-md max-h-96 overflow-y-auto custom-scroll" />
       </LiveProvider>

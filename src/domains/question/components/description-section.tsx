@@ -10,7 +10,7 @@ import SubmissionList from "domains/submissions/components/submission-list";
 import useQuestionQueries from "../queries/question.query";
 
 const Wrapper = ({ children }: { children: React.ReactElement | string }) => (
-  <div className="bg-background text-muted-foreground description">
+  <div className="bg-card text-muted-foreground description">
     {children}
   </div>
 );
@@ -32,7 +32,7 @@ const Description = () => {
   return (
     <Wrapper>
       <Tabs defaultValue="description" className="p-8">
-        <TabsList className="tabs-container">
+        <TabsList className="tabs-container bg-background">
           <TabsTrigger value="description" className="w-full tab">
             Description
           </TabsTrigger>

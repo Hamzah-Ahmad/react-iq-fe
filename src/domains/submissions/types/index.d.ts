@@ -5,7 +5,7 @@ export type Submission = {
   code: string;
   userId: string;
   questionId: string;
-  user: {
+  user?: {
     name: string;
     id: string;
   };

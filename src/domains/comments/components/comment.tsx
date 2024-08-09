@@ -57,32 +57,26 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
       <div className="border-1 border-muted-foreground rounded-md">
         <div className="font-extrabold">{comment.author?.name}</div>
         {isEditing ? (
-          <form onSubmit={handleSubmit}>
-            {/* <textarea
-              rows={1}
+          <form
+            onSubmit={handleSubmit}
+            className="relative h-24 bg-background  mb-10 rounded-lg"
+          >
+            <Textarea
               name="commentInput"
+              className="my-2 custom-textarea p-4 min-h-fit h-16  custom-scroll"
               defaultValue={comment.commentText}
-              className="p-2 text-muted w-3/4"
-            /> */}
-            <div className="relative">
-              <Textarea
-                name="commentInput"
-                className="my-2 no-resize"
-                rows={2}
-                defaultValue={comment.commentText}
-              />
-              <div className="absolute top-1/3 pt-2 right-4 py-0 flex">
-                <Button
-                  variant="ghost"
-                  type="button"
-                  onClick={() => setIsEditing(false)}
-                >
-                  Cancel
-                </Button>
-                <Button variant="ghost" type="submit">
-                  Save
-                </Button>
-              </div>
+            />
+            <div className="absolute bottom-0 right-4 py-0 flex">
+              <Button
+                variant="ghost"
+                type="button"
+                onClick={() => setIsEditing(false)}
+              >
+                Cancel
+              </Button>
+              <Button variant="ghost" type="submit">
+                Save
+              </Button>
             </div>
           </form>
         ) : (
@@ -140,21 +134,29 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
           {/* )}  */}
 
           {showReplyForm && (
-            <form onSubmit={handleReply} className="relative">
+            <form
+              onSubmit={handleReply}
+              className="relative h-28 bg-background mb-10 rounded-lg"
+            >
               <Textarea
                 rows={2}
                 name="replyInput"
-                className="no-resize mb-10"
+                className="mb-10 custom-textarea p-4  custom-scroll"
               />
-              <div className="absolute top-1/3 pt-2 right-4">
+              <div className="absolute bottom-0 pt-2 right-4">
                 <Button
                   variant="ghost"
                   type="button"
+                  className="hover:bg-transparent"
                   onClick={() => setShowReplyForm(false)}
                 >
                   Cancel
                 </Button>
-                <Button variant="ghost" type="submit">
+                <Button
+                  variant="ghost"
+                  type="submit"
+                  className="hover:bg-transparent"
+                >
                   Comment
                 </Button>
               </div>

@@ -15,7 +15,7 @@ const SubmissionList = () => {
   if (error) return <div>Error</div>;
   return (
     <div className="pt-4">
-      <Accordion type="single" collapsible className="flex flex-col gap-y-2">
+      <Accordion type="single" collapsible className="flex flex-col gap-y-4">
         {data?.map((submission) => (
           <SubmissionCard submission={submission} key={submission.id}/>
         ))}

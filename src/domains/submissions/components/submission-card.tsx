@@ -43,15 +43,15 @@ const SubmissionCard = ({
 
   return (
     <AccordionItem value={submission.id}>
-      <AccordionTrigger className="bg-primary p-2 rounded- hover:no-underline rounded-sm">
+      <AccordionTrigger className="bg-accent p-2 border-l-2 border-primary rounded- hover:no-underline ">
         <div className="flex w-11/12 justify-between items-center">
-          <p>{submission.user.name}</p>
+          <p>{submission.user?.name}'s solution</p>
 
           <div className="align">
             <div
               role="button"
               tabIndex={0}
-              className="px-2"
+              className="flex gap-x-2"
               onClick={updateLike}
             >
               <StarIcon
@@ -62,24 +62,27 @@ const SubmissionCard = ({
                     : "fill-transparent"
                 )}
               />
+              <span className="text-sm">{submission.likes?.length}</span>
             </div>
-            <span className="text-sm">{submission.likes?.length}</span>
 
             <div
               role="button"
               tabIndex={0}
-              className="px-2 ml-4"
+              className="px-2 ml-4 flex gap-x-2"
               onClick={viewSubmission}
             >
               <MessageSquareIcon className={cn("h-5 w-5")} />
+              <span className="text-sm">{submission.commentCount}</span>
             </div>
-            <span className="text-sm">{submission.commentCount}</span>
           </div>
         </div>
       </AccordionTrigger>
       <AccordionContent>
         <LiveProvider code={submission.code} noInline>
-          <LiveEditor className="font-mono editor" theme={themes.vsDark} />
+          <LiveEditor
+            className="font-mono editor !rounded-none"
+            theme={themes.vsDark}
+          />
         </LiveProvider>
       </AccordionContent>
     </AccordionItem>
