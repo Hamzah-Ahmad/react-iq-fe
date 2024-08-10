@@ -73,7 +73,6 @@ const useCommentQueries = () => {
           ["comments", variables.rootId],
           (currData: CommentWithAuthor[]) => {
             if (currData) {
-              console.log("==> ", data, auth?.user);
               return [{ ...data, author: auth?.user }, ...currData];
             } else {
               return [{ ...data, author: auth?.user }];

@@ -5,7 +5,6 @@ import RepliesSection from "./replies-section";
 import ReplyBox from "./reply-box";
 import UpdateComment from "./update-comment";
 import CommentActions from "./comment-actions";
-// import { Button } from "shared/components/ui/button";
 
 const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
   const { useGetReplies, useUpdateComment, useReplyToComment } =
@@ -25,9 +24,6 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
   );
 
   function toggleReplyform() {
-    if (!showReplyForm) {
-      fetchReplies();
-    }
     setShowReplyForm(!showReplyForm);
   }
 
@@ -56,14 +52,13 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
               comment,
               isEditing,
               setIsEditing,
-              replies,
               fetchReplies,
             }}
           />
         )}
       </div>
 
-      {/* Reply Box */}
+      {/* Reply Input */}
       {showReplyForm && (
         <ReplyBox
           replyToComment={replyToComment}
