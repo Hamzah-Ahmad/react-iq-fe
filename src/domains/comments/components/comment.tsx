@@ -3,8 +3,9 @@ import useCommentQueries from "../queries/comment.query";
 import { CommentWithAuthor } from "../types";
 import { useAuth } from "domains/auth/hooks/useAuth";
 import { Button } from "shared/components/ui/button";
-import { Textarea } from "shared/components/ui/textarea";
 import RepliesSection from "./replies-section";
+import ReplyBox from "./reply-box";
+import UpdateComment from "./update-comment";
 
 const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
   const { auth, isLoggedIn } = useAuth();
@@ -36,23 +37,6 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
     setShowReplyForm(false)
   );
 
-  function handleSubmit(e: any) {
-    e.preventDefault();
-    updateComment({
-      commentText: e.target?.commentInput?.value,
-      commentId: comment.id,
-      rootId: comment.parentId || comment.submissionId,
-    });
-  }
-
-  function handleReply(e: any) {
-    e.preventDefault();
-    replyToComment({
-      commentText: e.target?.replyInput?.value,
-      rootId: comment.id,
-    });
-  }
-
   return (
     <div className="my-2">
       <div className="border-2 border-secondary p-4 pb-0 rounded-lg">
@@ -60,28 +44,11 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
         <div className="rounded-md">
           <div className="font-extrabold">{comment.author?.name}</div>
           {isEditing ? (
-            <form
-              onSubmit={handleSubmit}
-              className="relative h-24 bg-background  mb-10 rounded-lg"
-            >
-              <Textarea
-                name="commentInput"
-                className="my-2 custom-textarea p-4 min-h-fit h-16  custom-scroll"
-                defaultValue={comment.commentText}
-              />
-              <div className="absolute bottom-0 right-4 py-0 flex">
-                <Button
-                  variant="ghost"
-                  type="button"
-                  onClick={() => setIsEditing(false)}
-                >
-                  Cancel
-                </Button>
-                <Button variant="ghost" type="submit">
-                  Update
-                </Button>
-              </div>
-            </form>
+            <UpdateComment
+              updateComment={updateComment}
+              comment={comment}
+              setIsEditing={setIsEditing}
+            />
           ) : (
             <span>{comment.commentText}</span>
           )}
@@ -140,34 +107,13 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
 
       {/* Reply Box */}
       {showReplyForm && (
-        <form
-          onSubmit={handleReply}
-          className="relative h-24 bg-background mb-10 rounded-lg mt-4"
-        >
-          <Textarea
-            rows={2}
-            name="replyInput"
-            className="mb-10 custom-textarea p-4  min-h-fit h-16 custom-scroll"
-          />
-          <div className="absolute bottom-0 pt-2 right-4">
-            <Button
-              variant="ghost"
-              type="button"
-              className="hover:bg-transparent"
-              onClick={() => setShowReplyForm(false)}
-            >
-              Cancel
-            </Button>
-            <Button
-              variant="ghost"
-              type="submit"
-              className="hover:bg-transparent"
-            >
-              Comment
-            </Button>
-          </div>
-        </form>
+        <ReplyBox
+          replyToComment={replyToComment}
+          setShowReplyForm={setShowReplyForm}
+          rootId={comment.id}
+        />
       )}
+
       {/* Replies */}
       <RepliesSection replies={replies} />
     </div>
