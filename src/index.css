@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -264,7 +263,6 @@
   border-radius: 8px;
 }
 
-
 .custom-textarea {
   border: none !important;
   overflow: auto;
@@ -275,6 +273,18 @@
   box-shadow: none !important;
 
   resize: none;
+}
+
+.comment-action {
+  padding: 0;
+  padding-right: 0.5rem;
+  height: fit-content;
+  font-size: 0.75rem;
+}
+
+.comment-action:hover {
+  background: transparent !important;
+  text-decoration: underline;
 }
 
 @media only screen and (max-width: 768px) {

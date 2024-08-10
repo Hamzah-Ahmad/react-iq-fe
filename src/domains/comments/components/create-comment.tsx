@@ -32,8 +32,9 @@ const CreateComment = ({ submissionId }: { submissionId: string }) => {
       <Textarea
         placeholder="Add a comment"
         value={userInput}
+        rows={4}
         onChange={handleChange}
-        className="scroll-invisible p-4 pr-16"
+        className="scroll-invisible p-4 pr-16 custom-textarea"
       />
       <Button variant="ghost" size="icon" className="absolute bottom-3 right-3">
         <SendHorizonal />

@@ -39,7 +39,7 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
 
   return (
     <div className="my-2">
-      <div className="border-2 border-secondary p-4 pb-0 rounded-lg">
+      <div className="border-2 border-secondary p-4 rounded-lg">
         {/* Username, Comment, Edit field */}
         <div className="rounded-md">
           <div className="font-extrabold">{comment.author?.name}</div>
@@ -60,8 +60,8 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
             <div className="flex gap-x-3">
               {isLoggedIn && (
                 <Button
-                  variant="ghost"
-                  className="px-0 pr-2 pt-0 text-xs hover:bg-transparent hover:underline"
+                  variant="link"
+                  className="p-0"
                   onClick={toggleReplyform}
                 >
                   Reply
@@ -69,8 +69,8 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
               )}
               {userId === comment.authorId && (
                 <Button
-                  variant="ghost"
-                  className="px-0 pr-2 pt-0 text-xs hover:bg-transparent hover:underline"
+                  variant="link"
+                  className="p-0"
                   onClick={() => setIsEditing(!isEditing)}
                 >
                   Edit
@@ -78,18 +78,14 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
               )}
               {/* Display Load Replies button if there is reply count and replies haven't been loaded yet */}
               {comment.replyCount && !replies ? (
-                <Button
-                  variant="ghost"
-                  className="px-0 pr-2 pt-0 text-xs hover:bg-transparent hover:underline"
-                  onClick={fetchReplies}
-                >
+                <Button variant="link" className="p-0" onClick={fetchReplies}>
                   View Replies
                 </Button>
               ) : null}
               {userId === comment.authorId && (
                 <Button
-                  variant="ghost"
-                  className="px-0 pr-2 pt-0 text-xs hover:bg-transparent hover:underline"
+                  variant="link"
+                  className="p-0"
                   onClick={() =>
                     deleteComment({
                       commentId: comment.id,
