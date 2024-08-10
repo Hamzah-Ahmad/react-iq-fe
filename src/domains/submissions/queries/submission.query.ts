@@ -117,8 +117,11 @@ const useSubmissionQueries = () => {
         );
         console.log(err);
       },
-      onSettled: () => {
-        queryClient.invalidateQueries({ queryKey: ["todos"] });
+      onSettled: (_, __, variables) => {
+        console.log("==> ", variables.questionId)
+        queryClient.invalidateQueries({
+          queryKey: ["submissions", variables.questionId],
+        });
       },
     });
   };
