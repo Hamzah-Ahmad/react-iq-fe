@@ -141,5 +141,3 @@ const useCommentQueries = () => {
 };
 
 export default useCommentQueries;
-
-
