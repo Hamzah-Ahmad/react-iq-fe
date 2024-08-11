@@ -2,7 +2,7 @@ import { isValidUUIDV4 } from "shared/lib/utils";
 import useCommentQueries from "../queries/comment.query";
 import Comment from "./comment";
 import CreateComment from "./create-comment";
-import Skeleton from "react-loading-skeleton";
+import Loader from "shared/components/ui/loader";
 
 const CommentSection = ({ submissionId }: { submissionId: string }) => {
   const { useGetCommentsBySubmissions } = useCommentQueries();
@@ -14,26 +14,10 @@ const CommentSection = ({ submissionId }: { submissionId: string }) => {
   if (isLoading) {
     return (
       <>
-        <Skeleton
-          height="7rem"
-          baseColor="#37475A"
-          highlightColor="#232E3E"
-          borderRadius="8px"
-          className="mt-12 mb-20"
-        />
-        <Skeleton
-          height="8rem"
-          baseColor="#37475A"
-          highlightColor="#232E3E"
-          borderRadius="8px"
-        />
-        <Skeleton
-          height="8rem"
-          baseColor="#37475A"
-          highlightColor="#232E3E"
-          borderRadius="8px"
-          className="mt-14"
-        />
+        <Loader height="7rem" className="mt-12 mb-20" />
+
+        <Loader height="7rem" className="mb-10" />
+        <Loader height="7rem" />
       </>
     );
   }
@@ -42,7 +26,7 @@ const CommentSection = ({ submissionId }: { submissionId: string }) => {
   return (
     <div className="mt-12">
       <CreateComment submissionId={submissionId} />
-      <div className="mt-16 flex flex-col gap-y-10">
+      <div className="mt-16 flex flex-col gap-y-6">
         {data.map((comment) => (
           <Comment key={comment.id} comment={comment} />
         ))}
