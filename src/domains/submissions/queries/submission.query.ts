@@ -28,6 +28,10 @@ const useSubmissionQueries = () => {
         queryClient.invalidateQueries({
           queryKey: ["submissions", variables.questionId],
         });
+        // invalidting query for sidebar (to add a checkmark inidacting that a solution has been submitted)
+        queryClient.invalidateQueries({
+          queryKey: ["questions", true],
+        });
       },
       onError: (error: any) => {
         console.log("Error: ", error);
