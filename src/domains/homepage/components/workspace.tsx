@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { themes } from "prism-react-renderer";
-import { LiveProvider, LiveEditor, LivePreview } from "react-live";
+import { LiveProvider, LiveEditor, LivePreview, LiveError } from "react-live";
 
 import { useAuth } from "domains/auth/hooks/useAuth";
 import Description from "domains/question/components/description-section";
@@ -72,7 +72,10 @@ const Workspace = () => {
             onChange={setCode}
           />
 
-          <LivePreview className="bg-foreground preview" />
+          <div className="flex flex-col gap-y-1">
+            <LiveError className="rounded-lg bg-red-400 p-2" />
+            <LivePreview className="bg-foreground preview flex-1" />
+          </div>
         </div>
       </LiveProvider>
       <div className="grid grid-cols-3 gap-4 homepage">

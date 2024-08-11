@@ -1,5 +1,4 @@
 import { isValidUUIDV4 } from "shared/lib/utils";
-import Skeleton from "react-loading-skeleton";
 
 import "react-loading-skeleton/dist/skeleton.css";
 import useSubmissionQueries from "../queries/submission.query";
