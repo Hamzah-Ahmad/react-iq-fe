@@ -82,7 +82,7 @@ const useCommentQueries = () => {
         );
       },
       onError: (error: any) => {
-        console.log("Error: ", error);
+        notifyError(error);
       },
     });
   };
@@ -103,7 +103,7 @@ const useCommentQueries = () => {
         );
       },
       onError: (error: any) => {
-        console.log("Error: ", error);
+        notifyError(error);
       },
     });
   };
@@ -126,7 +126,7 @@ const useCommentQueries = () => {
         );
       },
       onError: (error: any) => {
-        console.log("Error: ", error);
+        notifyError(error);
       },
     });
   };

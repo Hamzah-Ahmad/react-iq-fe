@@ -49,7 +49,6 @@ export function notifyError(error: any) {
     message = "Something went wrong";
   } else {
     if (typeof error === "string") {
-      console.log("Inside");
       message = error;
     } else if (error.message) {
       message = error.message;

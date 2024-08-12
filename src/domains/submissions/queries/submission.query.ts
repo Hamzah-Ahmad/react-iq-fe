@@ -6,6 +6,7 @@ import {
   SubmissionWithLikesAndCommentCount,
   UpdateLikeDto,
 } from "../types";
+import { notifyError } from "shared/lib/utils";
 
 const useSubmissionQueries = () => {
   const queryClient = useQueryClient();
@@ -34,7 +35,7 @@ const useSubmissionQueries = () => {
         });
       },
       onError: (error: any) => {
-        console.log("Error: ", error);
+        notifyError(error);
       },
     });
   };
@@ -119,7 +120,7 @@ const useSubmissionQueries = () => {
           ["submissions", variables.questionId],
           context?.previousData
         );
-        console.log(err);
+        notifyError(err);
       },
       onSettled: (_, __, variables) => {
         // queryClient.invalidateQueries({

@@ -6,6 +6,7 @@ import axios from "shared/config/axios";
 import { useAuth } from "domains/auth/hooks/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "shared/components/ui/button";
+import { notifyError } from "shared/lib/utils";
 
 const LoginForm = () => {
   const {
@@ -37,7 +38,7 @@ const LoginForm = () => {
       setAuth({ user, accessToken, refreshToken });
       navigate(from, { replace: true });
     } catch (err) {
-      console.log("err: ", err);
+      notifyError(err);
     }
   };
 

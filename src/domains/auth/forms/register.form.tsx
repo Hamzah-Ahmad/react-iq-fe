@@ -1,12 +1,11 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import RegisterSchema, {
-  RegisterSchemaType,
-} from "../schema/register.schema";
+import RegisterSchema, { RegisterSchemaType } from "../schema/register.schema";
 import axios from "shared/config/axios";
 import { useAuth } from "../hooks/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
+import { notifyError } from "shared/lib/utils";
 
 const RegisterForm = () => {
   const {
@@ -38,7 +37,7 @@ const RegisterForm = () => {
       setAuth({ user, accessToken, refreshToken });
       navigate(from, { replace: true });
     } catch (err) {
-      console.log("err: ", err);
+      notifyError(err);
     }
   };
   return (

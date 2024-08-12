@@ -1,3 +1,4 @@
+import { notifyError } from "shared/lib/utils";
 import axios from "../../../shared/config/axios";
 import { useAuth } from "./useAuth";
 
@@ -18,7 +19,7 @@ const useRefreshToken = () => {
       });
       return response?.data?.accessToken;
     } catch (err) {
-      console.log(err);
+      notifyError(err);
     }
   };
   return refresh;
