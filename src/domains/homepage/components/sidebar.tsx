@@ -1,19 +1,15 @@
 import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";
 import SidebarQuestionRow from "./sidebar-question-row";
-import { useAuth } from "domains/auth/hooks/useAuth";
-import useQuestionQueries from "domains/question/queries/question.query";
+import { QuestionWithUserSubmission } from "domains/question/components";
 
 type SidebarProps = {
   isOpen: boolean;
   toggleDrawer: () => void;
+  questionsList: QuestionWithUserSubmission[];
 };
 
-const Sidebar = ({ isOpen, toggleDrawer }: SidebarProps) => {
-  const { auth } = useAuth();
-  const { useGetAllQuestions } = useQuestionQueries();
-  const { data: questionsList } = useGetAllQuestions(!!auth?.accessToken);
-
+const Sidebar = ({ isOpen, toggleDrawer, questionsList }: SidebarProps) => {
   return (
     <Drawer
       open={isOpen}

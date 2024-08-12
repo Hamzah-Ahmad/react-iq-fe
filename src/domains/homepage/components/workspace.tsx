@@ -43,7 +43,7 @@ const Workspace = () => {
   const { mutate: createSubmission } = useCreateSubmission();
   const { data: userSubmissionData } = useGetUserSubmission(
     questionId,
-    !!auth?.accessToken
+    !!auth?.accessToken && !!questionId
   );
 
   function submitCode() {

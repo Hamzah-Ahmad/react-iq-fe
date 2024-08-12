@@ -1,17 +1,18 @@
-import { Routes, Route } from "react-router-dom";
+import { Navigate, Routes, Route } from "react-router-dom";
 import "./app.css";
 import Register from "../auth/pages/register.page";
 import Login from "../auth/pages/login.page";
 import Layout from "./components/Layout";
 import PersistLogin from "../auth/components/persistLogin";
-import RequireAuth from "../auth/components/requireAuth";
-import useRefreshToken from "../auth/hooks/useRefreshToken";
-import useLogout from "../auth/hooks/useLogout";
+// import RequireAuth from "../auth/components/requireAuth";
+// import useRefreshToken from "../auth/hooks/useRefreshToken";
+// import useLogout from "../auth/hooks/useLogout";
 import Homepage from "domains/homepage/pages/homepage.page";
 
 function App() {
-  const refresh = useRefreshToken();
-  const logout = useLogout();
+  // const refresh = useRefreshToken();
+  // const logout = useLogout();
+
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -23,21 +24,18 @@ function App() {
         {/* Private route */}
         <Route element={<PersistLogin />}>
           <Route path="/homepage" element={<Homepage />} />
-          <Route element={<RequireAuth allowedRoles={["user"]} />}>
-            <Route
-              path="/"
-              element={
-                <div>
-                  <button onClick={refresh}>Refresh</button>
-                  <button onClick={logout}>Logout</button>
-                </div>
-              }
-            />
-            <Route path="lounge" element={<div>Lounge</div>} />
-            <Route path="admin" element={<div>Admin</div>} />
-            {/* <Route path="user" element={<Users />} /> */}
-            <Route path="unauthorized" element={<div>Unauthorized</div>} />
-          </Route>
+          {/* <Route element={<RequireAuth allowedRoles={["user"]} />}> */}
+          <Route
+            path="/"
+            element={
+              <Navigate
+                to={{
+                  pathname: "/homepage",
+                }}
+              />
+            }
+          />
+          {/* </Route> */}
         </Route>
 
         <Route path="*" element={"Missing"} />
