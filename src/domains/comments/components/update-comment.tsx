@@ -58,7 +58,6 @@ const UpdateComment = ({
         value={updateInput}
         onChange={handleChange}
         className="my-2 custom-textarea p-4 min-h-fit h-16  custom-scroll"
-        defaultValue={comment.commentText}
       />
       <div className="absolute bottom-0 right-4 py-0 flex">
         <Button

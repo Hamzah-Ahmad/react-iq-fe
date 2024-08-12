@@ -45,13 +45,16 @@ export function notifyError(error: any) {
   let respData = error?.response?.data;
   let message = "";
   if (respData?.statusCode >= 500) {
-    message = "Server Error"; // Show generic message for server errors
+    // Show generic message for server errors
+    message = "Something went wrong";
   } else {
     if (typeof error === "string") {
+      console.log("Inside");
       message = error;
+    } else if (error.message) {
+      message = error.message;
     } else {
       let responseMsg = respData?.message;
-      console.log("responseMsg: ", responseMsg);
       if (Array.isArray(responseMsg)) {
         message = responseMsg[0];
       } else {
