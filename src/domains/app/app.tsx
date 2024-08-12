@@ -8,39 +8,43 @@ import PersistLogin from "../auth/components/persistLogin";
 // import useRefreshToken from "../auth/hooks/useRefreshToken";
 // import useLogout from "../auth/hooks/useLogout";
 import Homepage from "domains/homepage/pages/homepage.page";
+import { Toaster } from "sonner";
 
 function App() {
   // const refresh = useRefreshToken();
   // const logout = useLogout();
 
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        {/* Public Routes */}
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
-        <Route path="unauthorized" element={<div>Unauthorized</div>} />
+    <>
+      <Toaster richColors />
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          {/* Public Routes */}
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route path="unauthorized" element={<div>Unauthorized</div>} />
 
-        {/* Private route */}
-        <Route element={<PersistLogin />}>
-          <Route path="/homepage" element={<Homepage />} />
-          {/* <Route element={<RequireAuth allowedRoles={["user"]} />}> */}
-          <Route
-            path="/"
-            element={
-              <Navigate
-                to={{
-                  pathname: "/homepage",
-                }}
-              />
-            }
-          />
-          {/* </Route> */}
+          {/* Private route */}
+          <Route element={<PersistLogin />}>
+            <Route path="/homepage" element={<Homepage />} />
+            {/* <Route element={<RequireAuth allowedRoles={["user"]} />}> */}
+            <Route
+              path="/"
+              element={
+                <Navigate
+                  to={{
+                    pathname: "/homepage",
+                  }}
+                />
+              }
+            />
+            {/* </Route> */}
+          </Route>
+
+          <Route path="*" element={"Missing"} />
         </Route>
-
-        <Route path="*" element={"Missing"} />
-      </Route>
-    </Routes>
+      </Routes>
+    </>
   );
 }
 

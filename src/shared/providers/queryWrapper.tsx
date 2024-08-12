@@ -7,6 +7,7 @@ import {
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useLocation, useNavigate } from "react-router-dom";
+import { notifyError } from "shared/lib/utils";
 
 function createQueryClientWithContext({
   redirectToLogin,
@@ -19,14 +20,7 @@ function createQueryClientWithContext({
     if ([401, 403].includes(error?.response?.status)) {
       redirectToLogin();
     } else if (isQuery) {
-      let message = "";
-      if (typeof error === "string") {
-        message = error;
-      } else {
-        // console.log("err: ", error?.response?.data?.message);
-        message = error?.response?.data?.message?.[0];
-      }
-      alert(message || "Something went wrong");
+      notifyError(error);
     }
   }
 

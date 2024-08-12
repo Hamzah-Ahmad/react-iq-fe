@@ -4,6 +4,7 @@ import useCommentService from "../services/comment.service";
 import { CommentWithAuthor } from "../types";
 import useLazyQuery from "shared/hooks/useLazyQuery";
 import { useAuth } from "domains/auth/hooks/useAuth";
+import { notifyError } from "shared/lib/utils";
 
 const useCommentQueries = () => {
   const queryClient = useQueryClient();
@@ -58,7 +59,7 @@ const useCommentQueries = () => {
         );
       },
       onError: (error: any) => {
-        console.log("Error: ", error);
+        notifyError(error);
       },
     });
   };

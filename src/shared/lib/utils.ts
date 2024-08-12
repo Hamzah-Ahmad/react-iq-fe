@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { SetURLSearchParams } from "react-router-dom";
+import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -38,4 +39,26 @@ export function removeQueryParam(
 
   // Set the updated query params
   setSearchParams(updatedParams);
+}
+
+export function notifyError(error: any) {
+  let respData = error?.response?.data;
+  let message = "";
+  if (respData?.statusCode >= 500) {
+    message = "Server Error"; // Show generic message for server errors
+  } else {
+    if (typeof error === "string") {
+      message = error;
+    } else {
+      let responseMsg = respData?.message;
+      console.log("responseMsg: ", responseMsg);
+      if (Array.isArray(responseMsg)) {
+        message = responseMsg[0];
+      } else {
+        message = responseMsg;
+      }
+    }
+  }
+
+  toast.error(message || "Something went wrong");
 }
