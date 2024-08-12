@@ -23,9 +23,10 @@ function createQueryClientWithContext({
       if (typeof error === "string") {
         message = error;
       } else {
-        message = error?.message || error?.data || "Something went wrong";
+        // console.log("err: ", error?.response?.data?.message);
+        message = error?.response?.data?.message?.[0];
       }
-      alert(message);
+      alert(message || "Something went wrong");
     }
   }
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "../components/sidebar";
 import Workspace from "../components/workspace";
 import { Button } from "shared/components/ui/button";
@@ -24,6 +24,9 @@ const Homepage = () => {
     setSearchParams({ questionId: questionsList?.[0]?.id! });
   }
 
+  useEffect(() => {
+    setIsOpen(false);
+  }, [questionId]);
   function toggleDrawer() {
     setIsOpen((prevState) => !prevState);
   }
