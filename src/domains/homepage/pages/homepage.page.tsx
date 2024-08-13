@@ -6,11 +6,18 @@ import SubmissionViewer from "domains/submissions/components/submission-viewer";
 import { List } from "lucide-react";
 import useQuestionQueries from "domains/question/queries/question.query";
 import { useAuth } from "domains/auth/hooks/useAuth";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import Spinner from "shared/components/ui/spinner";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "shared/components/ui/popover";
+import useLogout from "domains/auth/hooks/useLogout";
 
 const Homepage = () => {
   const { auth } = useAuth();
+  const logout = useLogout();
   const [isOpen, setIsOpen] = useState(false);
 
   const { useGetAllQuestions } = useQuestionQueries();
@@ -40,13 +47,30 @@ const Homepage = () => {
   }
   return (
     <>
-      <Button
-        variant="ghost"
-        onClick={toggleDrawer}
-        className="m-4 border-primary flex gap-x-2 items-center"
-      >
-        <List /> Problem List
-      </Button>
+      <div className="flex items-center justify-between">
+        <Button
+          variant="ghost"
+          onClick={toggleDrawer}
+          className="m-4 border-primary flex gap-x-2 items-center"
+        >
+          <List /> Problem List
+        </Button>
+
+        {auth?.user ? (
+          <Popover>
+            <PopoverTrigger className="mr-6">{auth.user.name}</PopoverTrigger>
+            <PopoverContent className="bg-muted w-fit">
+              <Button variant="link" onClick={logout}>
+                Logout
+              </Button>
+            </PopoverContent>
+          </Popover>
+        ) : (
+          <Button className="mr-6 text-foreground" asChild>
+            <Link to="/login">Login</Link>
+          </Button>
+        )}
+      </div>
       <Sidebar
         isOpen={isOpen}
         toggleDrawer={toggleDrawer}
