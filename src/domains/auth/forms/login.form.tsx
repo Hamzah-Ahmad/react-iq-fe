@@ -7,6 +7,8 @@ import { useAuth } from "domains/auth/hooks/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "shared/components/ui/button";
 import { notifyError } from "shared/lib/utils";
+import { Input } from "shared/components/ui/input";
+import { Label } from "shared/components/ui/label";
 
 const LoginForm = () => {
   const {
@@ -43,25 +45,52 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label htmlFor="email">Email</label>
-        <input id="email" {...register("email")} type="email" />
-        {errors.email && (
-          <small className="error">{errors.email.message}</small>
-        )}
-      </div>
+    <div className="flex items-center justify-center h-screen w-full">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-y-10 border-2 border-muted  rounded-lg p-8"
+      >
+        <h1 className="text-2xl">Login to your account</h1>
+        <div>
+          <Label htmlFor="email">Email</Label>
+          <Input
+            id="email"
+            {...register("email")}
+            type="email"
+            className="w-72 mt-2"
+          />
+          {errors.email && (
+            <small className="block mt-2 text-red-500">
+              {errors.email.message}
+            </small>
+          )}
+        </div>
 
-      <div>
-        <label htmlFor="password">Password</label>
-        <input id="password" {...register("password")} type="password" />
-        {errors.password && (
-          <small className="error">{errors.password.message}</small>
-        )}
-      </div>
+        <div>
+          <Label htmlFor="password">Password</Label>
+          <Input
+            id="password"
+            {...register("password")}
+            type="password"
+            className="w-72 mt-2"
+          />
+          {errors.password && (
+            <small className="block mt-2 text-red-500">
+              {errors.password.message}
+            </small>
+          )}
+        </div>
 
-      <Button>Submit</Button>
-    </form>
+        <div>
+          <Button className="mt-2 text-secondary-foreground block w-full">
+            Login
+          </Button>
+          <Button variant="link" className="text-xs pl-0 w-full justify-end">
+            <span className="text-left">Create an account</span>
+          </Button>
+        </div>
+      </form>
+    </div>
   );
 };
 
