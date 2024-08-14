@@ -24,7 +24,7 @@ const CommentSection = ({ submissionId }: { submissionId: string }) => {
   if (!data) return null;
 
   return (
-    <div className="mt-12">
+    <div className="mt-12 mb-36">
       <CreateComment submissionId={submissionId} />
       <div className="mt-16 flex flex-col gap-y-6">
         {data.map((comment) => (

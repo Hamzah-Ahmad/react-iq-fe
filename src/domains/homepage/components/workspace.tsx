@@ -18,10 +18,11 @@ const Counter = (props: Props) => {
     React.useState<number>(0)
   return (
     <div>
-      <h3>
+      <h3 style={{"background" : "purple"}}>
         {props.label}: {count}
       </h3>
       <button
+       style={{"background" : "orange", "marginTop": "14px", "padding": "8px"}}
         onClick={() =>
           setCount(c => c + 1)
         }>
@@ -73,7 +74,7 @@ const Workspace = () => {
           />
 
           <div className="flex flex-col gap-y-1">
-            <LiveError className="rounded-lg bg-red-400 p-2" />
+            <LiveError className="rounded-lg bg-red-400 p-2 text-wrap" />
             <LivePreview className="bg-foreground preview flex-1" />
           </div>
         </div>

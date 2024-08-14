@@ -9,7 +9,11 @@ import CommentActions from "./comment-actions";
 const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
   const { useGetReplies, useUpdateComment, useReplyToComment } =
     useCommentQueries();
-  const { data: replies, fetch: fetchReplies } = useGetReplies(comment.id);
+  const {
+    data: replies,
+    fetch: fetchReplies,
+    isLoading: isLoadingReplies,
+  } = useGetReplies(comment.id);
 
   const [isEditing, setIsEditing] = useState(false);
   function toggleIsEditing() {
@@ -50,6 +54,7 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
             {...{
               toggleReplyform,
               comment,
+              replies,
               isEditing,
               setIsEditing,
               fetchReplies,
@@ -68,7 +73,7 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
       )}
 
       {/* Replies */}
-      <RepliesSection replies={replies} />
+      <RepliesSection replies={replies} isLoadingReplies={isLoadingReplies} />
     </div>
   );
 };

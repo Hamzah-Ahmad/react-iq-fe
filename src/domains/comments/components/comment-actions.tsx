@@ -9,16 +9,19 @@ type CommentActionProps = {
   comment: CommentWithAuthor;
   toggleReplyform: () => void;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  replies: CommentWithAuthor[] | undefined;
 };
 const CommentActions = ({
   comment,
   fetchReplies,
   setIsEditing,
   toggleReplyform,
+  replies,
 }: CommentActionProps) => {
   const { useDeleteComment } = useCommentQueries();
-  const { mutate: deleteComment } = useDeleteComment();
-  const [viewedReplies, setViewedReplies] = useState(false);
+  const { mutate: deleteComment, isPending: isPendingDelete } =
+    useDeleteComment();
+  const [viewedReplies, setViewedReplies] = useState(!!replies?.length);
   const { auth, isLoggedIn } = useAuth();
   const userId = auth?.user?.id;
 
@@ -53,6 +56,7 @@ const CommentActions = ({
           <Button
             variant="link"
             className="p-0"
+            disabled={isPendingDelete}
             onClick={() =>
               deleteComment({
                 commentId: comment.id,
