@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import LoginSchema, { LoginSchemaType } from "../schema/login.schema";
 import axios from "shared/config/axios";
 import { useAuth } from "domains/auth/hooks/useAuth";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "shared/components/ui/button";
 import { notifyError } from "shared/lib/utils";
 import { Input } from "shared/components/ui/input";
@@ -48,7 +48,7 @@ const LoginForm = () => {
     <div className="flex items-center justify-center h-screen w-full">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-y-10 border-2 border-muted  rounded-lg p-8"
+        className="flex flex-col gap-y-10 border-2 border-muted  rounded-lg p-8 w-96"
       >
         <h1 className="text-2xl">Login to your account</h1>
         <div>
@@ -57,7 +57,7 @@ const LoginForm = () => {
             id="email"
             {...register("email")}
             type="email"
-            className="w-72 mt-2"
+            className="mt-2"
           />
           {errors.email && (
             <small className="block mt-2 text-red-500">
@@ -72,7 +72,7 @@ const LoginForm = () => {
             id="password"
             {...register("password")}
             type="password"
-            className="w-72 mt-2"
+            className="mt-2"
           />
           {errors.password && (
             <small className="block mt-2 text-red-500">
@@ -82,11 +82,19 @@ const LoginForm = () => {
         </div>
 
         <div>
-          <Button className="mt-2 text-secondary-foreground block w-full">
+          <Button
+            type="submit"
+            className="mt-2 text-secondary-foreground block w-full"
+          >
             Login
           </Button>
-          <Button variant="link" className="text-xs pl-0 w-full justify-end">
-            <span className="text-left">Create an account</span>
+          <Button
+            type="button"
+            variant="link"
+            asChild
+            className="text-xs pl-0 w-full justify-end"
+          >
+            <Link to="/register">Create an account</Link>
           </Button>
         </div>
       </form>
