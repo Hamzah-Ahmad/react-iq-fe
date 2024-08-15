@@ -43,7 +43,12 @@ export function removeQueryParam(
 
 export function notifyError(error: any) {
   let respData = error?.response?.data;
+  if ([401, 403]?.includes(respData?.statusCode)) {
+    toast.warning("Please log in to continue with this action.");
+    return;
+  }
   let message = "";
+
   if (respData?.statusCode >= 500) {
     // Show generic message for server errors
     message = "Something went wrong";

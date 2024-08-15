@@ -7,6 +7,7 @@ import {
   UpdateLikeDto,
 } from "../types";
 import { notifyError } from "shared/lib/utils";
+import { toast } from "sonner";
 
 const useSubmissionQueries = () => {
   const queryClient = useQueryClient();
@@ -33,6 +34,8 @@ const useSubmissionQueries = () => {
         queryClient.invalidateQueries({
           queryKey: ["questions", true],
         });
+
+        toast.success("Submission added successfully");
       },
       onError: (error: any) => {
         notifyError(error);

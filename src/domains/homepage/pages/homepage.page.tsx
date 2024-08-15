@@ -27,8 +27,8 @@ const Homepage = () => {
 
   const questionId = searchParams.get("questionId") || "";
 
-  if (!questionId) {
-    setSearchParams({ questionId: questionsList?.[0]?.id! });
+  if (!questionId && questionsList?.[0]?.id) {
+    setSearchParams({ questionId: questionsList?.[0]?.id });
   }
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const Homepage = () => {
     setIsOpen((prevState) => !prevState);
   }
 
-  if (!questionsList) {
+  if (!questionsList?.length) {
     return (
       <div className="h-screen w-full flex justify-center items-center">
         <Spinner />

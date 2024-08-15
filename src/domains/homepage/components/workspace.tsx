@@ -41,7 +41,7 @@ const Workspace = () => {
   const questionId = searchParams.get("questionId") || "";
   const [code, setCode] = useState(DEFAULT_CODE);
   const { useCreateSubmission, useGetUserSubmission } = useSubmissionQueries();
-  const { mutate: createSubmission } = useCreateSubmission();
+  const { mutate: createSubmission, isPending: isPendingCreateSubmssion } = useCreateSubmission();
   const { data: userSubmissionData } = useGetUserSubmission(
     questionId,
     !!auth?.accessToken && !!questionId
@@ -81,6 +81,7 @@ const Workspace = () => {
       </LiveProvider>
       <div className="grid grid-cols-3 gap-4 homepage">
         <Button
+          disabled={isPendingCreateSubmssion}
           onClick={submitCode}
           className="bg-primary w-fit col-start-2 justify-self-end mt-3 text-secondary-foreground"
         >
