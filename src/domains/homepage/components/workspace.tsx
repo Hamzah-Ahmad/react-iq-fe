@@ -10,27 +10,55 @@ import { Button } from "shared/components/ui/button";
 
 const DEFAULT_CODE = `
 // Placeholder code for reference
-type Props = {
-  label: string;
-}
 const Counter = (props: Props) => {
-  const [count, setCount] =
-    React.useState<number>(0)
-  return (
-    <div>
-      <h3 style={{"background" : "purple"}}>
-        {props.label}: {count}
-      </h3>
-      <button
-       style={{"background" : "orange", "marginTop": "14px", "padding": "8px"}}
-        onClick={() =>
-          setCount(c => c + 1)
-        }>
-        Increment
-      </button>
+  const [count, setCount] = React.useState(0);
+  const increment = () => setCount(count + 1);
+  const decrement = () => setCount(count - 1);
+    return (
+    <div style={styles.container}>
+      <h1>
+        React playground powered by
+        <a
+          style={styles.link}
+          href="https://commerce.nearform.com/open-source/react-live/"
+        >
+          React Live
+        </a>
+      </h1>
+      <div style={styles.buttonRow}>
+        <button style={styles.btn} onClick={decrement}>-</button>
+        <span>Count {count} </span>
+        <button style={styles.btn} onClick={increment}>+</button>
+      </div>
     </div>
-  )
+  );
 }
+
+const styles = {
+  container: {
+    display: "flex",
+    flexDirection: "column", 
+    alignItems: "center",
+    justifyContent: "center",
+    color: "#232E3E",
+    height: "100%"
+  },
+  link : {
+    color: "#F59314",
+    marginLeft: "8px"
+  },
+  buttonRow: {
+    display: "flex",
+    columnGap: "12px",
+    marginTop: "24px"
+  },
+  btn: {
+    width: "40px",
+    color: "#ffffff",
+    background: "#F59314"
+  }
+}
+
 // Important! Use the render function to render your components
 render(<Counter label="Counter" />)    
 `;
@@ -41,7 +69,8 @@ const Workspace = () => {
   const questionId = searchParams.get("questionId") || "";
   const [code, setCode] = useState(DEFAULT_CODE);
   const { useCreateSubmission, useGetUserSubmission } = useSubmissionQueries();
-  const { mutate: createSubmission, isPending: isPendingCreateSubmssion } = useCreateSubmission();
+  const { mutate: createSubmission, isPending: isPendingCreateSubmssion } =
+    useCreateSubmission();
   const { data: userSubmissionData } = useGetUserSubmission(
     questionId,
     !!auth?.accessToken && !!questionId
