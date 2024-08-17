@@ -81,7 +81,7 @@ const SubmissionCard = ({
         <LiveProvider code={submission.code} noInline>
           <LiveEditor
             className="font-mono editor !rounded-none"
-            theme={themes.vsDark}
+            theme={themes.jettwaveDark}
           />
         </LiveProvider>
       </AccordionContent>

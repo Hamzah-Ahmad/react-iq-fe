@@ -18,7 +18,9 @@ const Wrapper = ({
   children: React.ReactElement | React.ReactElement[] | string;
   className?: string;
 }) => (
-  <div className={cn("bg-card text-muted-foreground description", className)}>
+  <div
+    className={cn("bg-card text-muted-foreground description pb-10", className)}
+  >
     {children}
   </div>
 );
@@ -57,12 +59,12 @@ const Description = () => {
         </TabsList>
         <TabsContent value="description">
           <div className="pt-4">
-            <h4 className="text-xl">{title}</h4>
-            <p className="text-md mt-6">{description}</p>
+            <h4 className="text-2xl">{title}</h4>
+            {description && <p className="text-md mt-6">{description}</p>}
           </div>
           {asset && (
             <div className="pt-10">
-              <h4 className="text-xl">Visual Guide</h4>
+              <h4 className="text-xl">Visual Guide :</h4>
               <img src={asset} className="mt-6" alt="Visual guide" />
             </div>
           )}

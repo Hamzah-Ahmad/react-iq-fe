@@ -3,6 +3,7 @@ import { isValidUUIDV4 } from "shared/lib/utils";
 import "react-loading-skeleton/dist/skeleton.css";
 import useSubmissionQueries from "../queries/submission.query";
 import { LiveEditor, LiveProvider } from "react-live";
+import { themes } from "prism-react-renderer";
 import CommentSection from "domains/comments/components/comment-section";
 import Loader from "shared/components/ui/loader";
 
@@ -44,7 +45,10 @@ const SubmissionContent = ({
         <Loader height="24rem" />
       ) : (
         <LiveProvider code={submission?.code} noInline>
-          <LiveEditor className="font-mono rounded-md max-h-96 overflow-y-auto custom-scroll" />
+          <LiveEditor
+            className="font-mono rounded-md max-h-96 overflow-y-auto custom-scroll"
+            theme={themes.jettwaveDark}
+          />
         </LiveProvider>
       )}
 

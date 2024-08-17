@@ -35,7 +35,7 @@ const useSubmissionQueries = () => {
           queryKey: ["questions", true],
         });
 
-        toast.success("Submission added successfully");
+        toast.success("Submission updated successfully");
       },
       onError: (error: any) => {
         notifyError(error);

@@ -5,23 +5,22 @@ import { cn } from "shared/lib/utils";
 
 const SidebarQuestionRow = ({
   question,
-  selected
+  selected,
 }: {
   question: QuestionWithUserSubmission;
-  selected?: boolean
+  selected?: boolean;
 }) => {
   return (
     <Link
       to={`/homepage?questionId=${question.id}`}
-      className={cn("px-8 py-2 border-y-2 flex items-center w-full justify-between", selected && `bg-input`)}
+      className={cn(
+        "px-8 py-2 border-y-2 flex items-center w-full justify-between",
+        selected && `bg-primary`
+      )}
     >
-      <p>{question.title}</p>
+      <p className="">{question.title}</p>
       <span className="justify-end scale-90">
-        {question.userSubmission ? (
-          <SquareCheck className="text-primary" />
-        ) : (
-          <Square className="text-primary" />
-        )}
+        {question.userSubmission ? <SquareCheck /> : <Square />}
       </span>
     </Link>
   );

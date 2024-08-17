@@ -60,7 +60,7 @@ const Homepage = () => {
           <Popover>
             <PopoverTrigger className="mr-6 text-sm">Logged in as {auth.user.name}</PopoverTrigger>
             <PopoverContent className="bg-background w-fit py-1">
-              <Button variant="link" onClick={logout}>
+              <Button variant="link" className="text-foreground" onClick={logout}>
                 Logout
               </Button>
             </PopoverContent>

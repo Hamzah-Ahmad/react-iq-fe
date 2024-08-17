@@ -44,7 +44,7 @@ const styles = {
     height: "100%"
   },
   link : {
-    color: "#F59314",
+    color: "#6D28D9",
     marginLeft: "8px"
   },
   buttonRow: {
@@ -55,7 +55,7 @@ const styles = {
   btn: {
     width: "40px",
     color: "#ffffff",
-    background: "#F59314",
+    background: "#6D28D9",
     borderRadius: "4px",
   }
 }
@@ -97,9 +97,7 @@ const Workspace = () => {
           <Description />
           <LiveEditor
             className="font-mono editor"
-            theme={themes.vsDark}
-            // theme={themes.jettwaveDark}
-            // theme={themes.nightOwl}
+            theme={themes.jettwaveDark}
             onChange={setCode}
           />
 

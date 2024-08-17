@@ -101,7 +101,7 @@
     --card-foreground: 210 20% 98%;
     --popover: 224 71.4% 4.1%;
     --popover-foreground: 210 20% 98%;
-    --primary: 263.4 70% 50.4%;
+    --primary: 188.35 86.61% 43.92%;
     --primary-foreground: 210 20% 98%;
     --secondary: 215 27.9% 16.9%;
     --secondary-foreground: 210 20% 98%;
@@ -113,7 +113,7 @@
     --destructive-foreground: 210 20% 98%;
     --border: 215 27.9% 16.9%;
     --input: 215 27.9% 16.9%;
-    --ring: 263.4 70% 50.4%;
+    --ring: 188.35 86.61% 43.92%;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
@@ -141,7 +141,7 @@
     --card-foreground: 32.73 10.89% 19.8%;
     --popover: 180 5.66% 89.61%;
     --popover-foreground: 240 10% 3.92%;
-    --primary: 263.4 70% 50.4%;
+    --primary: 188.35 86.61% 43.92%;
     --primary-foreground: 0 0% 100%;
     --secondary: 240 4.76% 95.88%;
     --secondary-foreground: 240 5.88% 10%;
@@ -159,12 +159,13 @@
 
   .dark {
     --background: 216.92 24.53% 10.39%;
+    --background: 257.14 24.14% 5.69%;
     --foreground: 0 0% 99.22%;
     --card: 215.56 27.84% 19.02%;
     --card-foreground: 36.35 82.54% 75.29%;
     --popover: 240 10% 3.92%;
     --popover-foreground: 0 0% 98.04%;
-    --primary: 263.4 70% 50.4%;
+    --primary: 188.35 86.61% 43.92%;
     --primary-foreground: 240 5.88% 10%;
     --secondary: 240 6.98% 33.73%;
     --secondary-foreground: 0 0% 98.04%;
@@ -263,7 +264,7 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background: hsl(263.4 70% 50.4%);
+    background: hsl(188.35 86.61% 43.92%);
   }
 
   &::-webkit-scrollbar-thumb:hover {
@@ -283,7 +284,7 @@
 }
 
 .tab[data-state="active"] {
-  background-color: hsl(263.4 70% 50.4%) !important;
+  background-color: hsl(188.35 86.61% 43.92%) !important;
   border-radius: 8px;
 }
 
