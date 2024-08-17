@@ -141,7 +141,7 @@
     --card-foreground: 32.73 10.89% 19.8%;
     --popover: 180 5.66% 89.61%;
     --popover-foreground: 240 10% 3.92%;
-    --primary: 36 100% 48.04%;
+    --primary: 263.4 70% 50.4%;
     --primary-foreground: 0 0% 100%;
     --secondary: 240 4.76% 95.88%;
     --secondary-foreground: 240 5.88% 10%;
@@ -164,7 +164,7 @@
     --card-foreground: 36.35 82.54% 75.29%;
     --popover: 240 10% 3.92%;
     --popover-foreground: 0 0% 98.04%;
-    --primary: 36 100% 48.04%;
+    --primary: 263.4 70% 50.4%;
     --primary-foreground: 240 5.88% 10%;
     --secondary: 240 6.98% 33.73%;
     --secondary-foreground: 0 0% 98.04%;
@@ -175,7 +175,7 @@
     --destructive: 0 100% 35.29%;
     --destructive-foreground: 0 0% 98.04%;
     --border: 215.38 27.66% 27.65%;
-    --input: 35.38 43.82% 34.9%;
+    --input: 220 13% 91%;
     --ring: 36 100% 48.04%;
     --radius: 0.5rem;
   }
@@ -198,7 +198,7 @@
 
 .lds-dual-ring {
   /* change color here */
-  color: #37475A;
+  color: #37475a;
 }
 .lds-dual-ring,
 .lds-dual-ring:after {
@@ -263,15 +263,13 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background: hsl(36 100% 48.04%);
+    background: hsl(263.4 70% 50.4%);
   }
 
   &::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
 }
-
-
 
 .scroll-invisible {
   &::-webkit-scrollbar {
@@ -285,7 +283,7 @@
 }
 
 .tab[data-state="active"] {
-  background-color: hsl(var(--primary)) !important;
+  background-color: hsl(263.4 70% 50.4%) !important;
   border-radius: 8px;
 }
 

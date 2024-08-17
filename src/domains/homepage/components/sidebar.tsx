@@ -2,6 +2,7 @@ import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";
 import SidebarQuestionRow from "./sidebar-question-row";
 import { QuestionWithUserSubmission } from "domains/question/components";
+import { useSearchParams } from "react-router-dom";
 
 type SidebarProps = {
   isOpen: boolean;
@@ -10,6 +11,9 @@ type SidebarProps = {
 };
 
 const Sidebar = ({ isOpen, toggleDrawer, questionsList }: SidebarProps) => {
+  const [searchParams] = useSearchParams();
+  const questionId = searchParams.get("questionId") || "";
+
   return (
     <Drawer
       open={isOpen}
@@ -21,7 +25,7 @@ const Sidebar = ({ isOpen, toggleDrawer, questionsList }: SidebarProps) => {
       {questionsList && (
         <ul>
           {questionsList.map((question) => (
-            <SidebarQuestionRow question={question} key={question.id} />
+            <SidebarQuestionRow question={question} key={question.id} selected={question.id === questionId} />
           ))}
         </ul>
       )}
