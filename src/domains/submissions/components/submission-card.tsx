@@ -56,9 +56,9 @@ const SubmissionCard = ({
             >
               <StarIcon
                 className={cn(
-                  "h-5 w-5 hover:fill-slate-400 hover:text-slate-400",
+                  "h-5 w-5 hover:fill-input hover:text-input",
                   submission.likes?.includes(auth?.user?.id)
-                    ? "fill-neutral-200"
+                    ? "fill-primary text-primary"
                     : "fill-transparent"
                 )}
               />

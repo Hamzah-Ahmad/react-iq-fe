@@ -38,11 +38,11 @@ const Description = () => {
       <Wrapper className="px-8">
         <Loader height="2.25rem" className="my-8" />
         <Loader height="2.75rem" className="my-3" />
-        <Loader height="2.25rem"  />
+        <Loader height="2.25rem" />
       </Wrapper>
     );
   if (isError) return <Wrapper>Something went wrong</Wrapper>;
-  const { title, description } = question || {};
+  const { title, description, asset, hints } = question || {};
 
   return (
     <Wrapper>
@@ -60,6 +60,26 @@ const Description = () => {
             <h4 className="text-xl">{title}</h4>
             <p className="text-md mt-6">{description}</p>
           </div>
+          {asset && (
+            <div className="pt-10">
+              <h4 className="text-xl">Visual Guide</h4>
+              <img src={asset} className="mt-6" alt="Visual guide" />
+            </div>
+          )}
+          {hints && (
+            <div className="pt-10 ">
+              <h4 className="text-xl">Need a hint?</h4>
+              <ul className="list-disc">
+                {hints.map((hint) => (
+                  <li className="mt-3 ml-4 text-primary" key={hint}>
+                    <a href={hint} target="_blank" rel="noreferrer">
+                      {hint}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </TabsContent>
         <TabsContent value="submissions">
           <SubmissionList />
