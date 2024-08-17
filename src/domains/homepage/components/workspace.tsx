@@ -92,7 +92,7 @@ const Workspace = () => {
   return (
     <div className="px-4">
       <LiveProvider code={code} noInline>
-        <div className="grid grid-cols-3 gap-4 workspace">
+        <div className="grid grid-flow-col auto-cols-[minmax(490px,1fr)] gap-4 overflow-x-auto workspace custom-scroll">
           <Description />
           <LiveEditor
             className="font-mono editor"

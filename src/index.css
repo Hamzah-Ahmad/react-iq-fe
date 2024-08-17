@@ -234,6 +234,7 @@
 .preview {
   overflow-y: auto;
   border-radius: 8px;
+  min-width: 490px;
   &::-webkit-scrollbar {
     width: 0px;
   }
@@ -254,6 +255,7 @@
 .custom-scroll {
   &::-webkit-scrollbar {
     width: 4px;
+    height: 2px;
   }
 
   &::-webkit-scrollbar-track {
@@ -268,6 +270,8 @@
     background: #555;
   }
 }
+
+
 
 .scroll-invisible {
   &::-webkit-scrollbar {
