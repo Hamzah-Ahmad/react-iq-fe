@@ -44,7 +44,7 @@ const styles = {
     height: "100%"
   },
   link : {
-    color: "#6D28D9",
+    color: "#0FB6D1",
     marginLeft: "8px"
   },
   buttonRow: {
@@ -55,7 +55,7 @@ const styles = {
   btn: {
     width: "40px",
     color: "#ffffff",
-    background: "#6D28D9",
+    background: "#0FB6D1",
     borderRadius: "4px",
   }
 }
