@@ -26,8 +26,8 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
 
   const [showReplyForm, setShowReplyForm] = useState(false);
 
-  const { mutate: updateComment } = useUpdateComment(toggleIsEditing);
-  const { mutate: replyToComment } = useReplyToComment(() =>
+  const { mutate: updateComment, isPending: isPendingUpdate } = useUpdateComment(toggleIsEditing);
+  const { mutate: replyToComment, isPending: isPendingReply } = useReplyToComment(() =>
     setShowReplyForm(false)
   );
 
@@ -50,6 +50,7 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
               updateComment={updateComment}
               comment={comment}
               setIsEditing={setIsEditing}
+              isPendingUpdate={isPendingUpdate}
             />
           ) : (
             <span>{comment.commentText}</span>
@@ -76,6 +77,7 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
         <ReplyBox
           replyToComment={replyToComment}
           setShowReplyForm={setShowReplyForm}
+          isPendingReply={isPendingReply}
           rootId={comment.id}
         />
       )}

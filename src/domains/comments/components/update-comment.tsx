@@ -28,11 +28,13 @@ type UpdateCommentProps = {
   updateComment: UpdateCommentFnType;
   comment: CommentWithAuthor;
   setIsEditing: any;
+  isPendingUpdate: boolean;
 };
 const UpdateComment = ({
   updateComment,
   comment,
   setIsEditing,
+  isPendingUpdate = false,
 }: UpdateCommentProps) => {
   const [updateInput, setUpdateInput] = useState(comment.commentText);
 
@@ -67,7 +69,7 @@ const UpdateComment = ({
         >
           Cancel
         </Button>
-        <Button variant="ghost" type="submit" disabled={!updateInput}>
+        <Button variant="ghost" type="submit" disabled={!updateInput || isPendingUpdate}>
           Update
         </Button>
       </div>

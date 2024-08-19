@@ -25,12 +25,14 @@ type ReplyBoxProps = {
   setShowReplyForm: React.Dispatch<React.SetStateAction<boolean>>;
   replyToComment: ReplyToCommentFn;
   rootId: string;
+  isPendingReply: boolean;
 };
 
 const ReplyBox = ({
   setShowReplyForm,
   replyToComment,
   rootId,
+  isPendingReply = false,
 }: ReplyBoxProps) => {
   const [commentInput, setCommentInput] = useState<string>("");
   function handleReply(e: React.FormEvent<HTMLFormElement>) {
@@ -68,7 +70,12 @@ const ReplyBox = ({
         >
           Cancel
         </Button>
-        <Button variant="ghost" type="submit" className="hover:bg-transparent" disabled={!commentInput}>
+        <Button
+          variant="ghost"
+          type="submit"
+          className="hover:bg-transparent"
+          disabled={!commentInput || isPendingReply}
+        >
           Comment
         </Button>
       </div>

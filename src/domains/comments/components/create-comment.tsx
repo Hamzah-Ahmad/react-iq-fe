@@ -17,8 +17,7 @@ const CreateComment = ({ submissionId }: { submissionId: string }) => {
   function clearInput() {
     setUserInput("");
   }
-  const { mutate } = useCreateComment(clearInput);
-
+  const { mutate, isPending } = useCreateComment(clearInput);
   function createComment(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -36,7 +35,12 @@ const CreateComment = ({ submissionId }: { submissionId: string }) => {
         onChange={handleChange}
         className="scroll-invisible p-4 pr-16 custom-textarea placeholder:text-secondary"
       />
-      <Button variant="ghost" size="icon" className="absolute bottom-3 right-3">
+      <Button
+        variant="ghost"
+        size="icon"
+        className="absolute bottom-3 right-3"
+        disabled={isPending || !userInput}
+      >
         <SendHorizonal />
       </Button>
     </form>
