@@ -63,6 +63,34 @@ const styles = {
 // Important! Use the render function to render your components
 render(<Counter label="Counter" />)    
 `;
+
+const LOADING_CODE = `
+const LOADER = (props: Props) => {
+  
+    return (
+    <div style={styles.container}>
+     <div style={styles.text}>Loadiing Submission...</div>
+    </div>
+  );
+}
+
+const styles = {
+  container: {
+    display: "flex",
+    flexDirection: "column", 
+    alignItems: "center",
+    justifyContent: "center",
+    color: "#232E3E",
+    height: "100%"
+  },
+  text : {
+    color: "#0FB6D1",
+  },
+}
+
+render(<LOADER />)    
+`;
+
 const Workspace = () => {
   const { auth, isLoggedIn } = useAuth();
   const [searchParams] = useSearchParams();
@@ -72,10 +100,11 @@ const Workspace = () => {
   const { useCreateSubmission, useGetUserSubmission } = useSubmissionQueries();
   const { mutate: createSubmission, isPending: isPendingCreateSubmssion } =
     useCreateSubmission();
-  const { data: userSubmissionData } = useGetUserSubmission(
-    questionId,
-    !!auth?.accessToken && !!questionId
-  );
+  const {
+    data: userSubmissionData,
+    isLoading: isLoadingUserSubmission,
+    isFetching: isFetchingUserSubmission,
+  } = useGetUserSubmission(questionId, !!auth?.accessToken && !!questionId);
 
   function submitCode() {
     createSubmission({
@@ -87,8 +116,14 @@ const Workspace = () => {
   useEffect(() => {
     if (userCode) {
       setCode(userCode);
+    } else {
+      if (isLoadingUserSubmission || isFetchingUserSubmission) {
+        setCode(LOADING_CODE);
+        return;
+      }
+      setCode(DEFAULT_CODE);
     }
-  }, [userCode]);
+  }, [userCode, isLoadingUserSubmission, isFetchingUserSubmission]);
 
   return (
     <div className="px-4">
@@ -105,7 +140,7 @@ const Workspace = () => {
             <LiveError className="rounded-lg bg-red-400 p-2 text-wrap" />
             <LivePreview className="bg-foreground preview flex-1" />
             <Button
-              disabled={isPendingCreateSubmssion || !isLoggedIn}
+              disabled={isPendingCreateSubmssion || !isLoggedIn || isLoadingUserSubmission}
               onClick={submitCode}
               className="w-fill bg-primary col-start-2 justify-self-end mt-3 text-secondary-foreground"
             >

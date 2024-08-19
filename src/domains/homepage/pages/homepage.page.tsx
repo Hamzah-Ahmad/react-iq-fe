@@ -27,13 +27,16 @@ const Homepage = () => {
 
   const questionId = searchParams.get("questionId") || "";
 
-  if (!questionId && questionsList?.[0]?.id) {
-    setSearchParams({ questionId: questionsList?.[0]?.id });
-  }
 
   useEffect(() => {
     setIsOpen(false);
   }, [questionId]);
+
+  useEffect(() => {
+    if (!questionId && questionsList?.[0]?.id) {
+      setSearchParams({ questionId: questionsList?.[0]?.id });
+    }
+  }, [questionsList, questionId, setSearchParams]);
   function toggleDrawer() {
     setIsOpen((prevState) => !prevState);
   }
