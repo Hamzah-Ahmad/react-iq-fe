@@ -2,6 +2,7 @@ import { Square, SquareCheck } from "lucide-react";
 import { QuestionWithUserSubmission } from "domains/question/components";
 import { Link } from "react-router-dom";
 import { cn } from "shared/lib/utils";
+import { useAuth } from "domains/auth/hooks/useAuth";
 
 const SidebarQuestionRow = ({
   question,
@@ -10,6 +11,8 @@ const SidebarQuestionRow = ({
   question: QuestionWithUserSubmission;
   selected?: boolean;
 }) => {
+  const { isLoggedIn } = useAuth();
+
   return (
     <Link
       to={`/homepage?questionId=${question.id}`}
@@ -20,7 +23,13 @@ const SidebarQuestionRow = ({
     >
       <p className="">{question.title}</p>
       <span className="justify-end scale-90">
-        {question.userSubmission ? <SquareCheck /> : <Square />}
+        {isLoggedIn ? (
+          question.userSubmission ? (
+            <SquareCheck />
+          ) : (
+            <Square />
+          )
+        ) : null}
       </span>
     </Link>
   );

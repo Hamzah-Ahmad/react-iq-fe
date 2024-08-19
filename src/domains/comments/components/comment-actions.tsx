@@ -22,7 +22,7 @@ const CommentActions = ({
   const { mutate: deleteComment, isPending: isPendingDelete } =
     useDeleteComment();
   const [viewedReplies, setViewedReplies] = useState(!!replies?.length);
-  const { auth, isLoggedIn } = useAuth();
+  const { auth } = useAuth();
   const userId = auth?.user?.id;
 
   function viewReplies() {
@@ -32,11 +32,9 @@ const CommentActions = ({
   return (
     <div className="pt-2">
       <div className="flex gap-x-3">
-        {isLoggedIn && (
-          <Button variant="link" className="p-0" onClick={toggleReplyform}>
-            Reply
-          </Button>
-        )}
+        <Button variant="link" className="p-0" onClick={toggleReplyform}>
+          Reply
+        </Button>
         {userId === comment.authorId && (
           <Button
             variant="link"

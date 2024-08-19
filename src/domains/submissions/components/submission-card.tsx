@@ -12,7 +12,7 @@ import useSubmissionQueries from "../queries/submission.query";
 import { useAuth } from "domains/auth/hooks/useAuth";
 import { MouseEvent } from "react";
 import { cn, updateQueryParams } from "shared/lib/utils";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const SubmissionCard = ({
   submission,
@@ -23,16 +23,21 @@ const SubmissionCard = ({
   const { useUpdateLikeOnSubmission } = useSubmissionQueries();
 
   const { mutate } = useUpdateLikeOnSubmission();
+  const navigate = useNavigate();
 
-  const { auth } = useAuth();
+  const { auth, isLoggedIn } = useAuth();
 
   const updateLike = async (e: MouseEvent<Element>) => {
     e.stopPropagation();
-    mutate({
-      submissionId: submission.id,
-      questionId: submission.questionId,
-      userId: auth?.user?.id,
-    });
+    if (!isLoggedIn) {
+      navigate("/login");
+    } else {
+      mutate({
+        submissionId: submission.id,
+        questionId: submission.questionId,
+        userId: auth?.user?.id,
+      });
+    }
   };
 
   const viewSubmission = async (e: MouseEvent<Element>) => {

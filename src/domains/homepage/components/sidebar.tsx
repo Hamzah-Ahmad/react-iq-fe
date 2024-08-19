@@ -25,7 +25,11 @@ const Sidebar = ({ isOpen, toggleDrawer, questionsList }: SidebarProps) => {
       {questionsList && (
         <ul>
           {questionsList.map((question) => (
-            <SidebarQuestionRow question={question} key={question.id} selected={question.id === questionId} />
+            <SidebarQuestionRow
+              question={question}
+              key={question.id}
+              selected={question.id === questionId}
+            />
           ))}
         </ul>
       )}

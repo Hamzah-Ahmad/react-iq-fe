@@ -5,10 +5,13 @@ import RepliesSection from "./replies-section";
 import ReplyBox from "./reply-box";
 import UpdateComment from "./update-comment";
 import CommentActions from "./comment-actions";
+import { useAuth } from "domains/auth/hooks/useAuth";
+import { useNavigate } from 'react-router-dom';
 
 const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
   const { useGetReplies, useUpdateComment, useReplyToComment } =
     useCommentQueries();
+  const { isLoggedIn } = useAuth();
   const {
     data: replies,
     fetch: fetchReplies,
@@ -16,6 +19,7 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
   } = useGetReplies(comment.id);
 
   const [isEditing, setIsEditing] = useState(false);
+  const navigate = useNavigate();
   function toggleIsEditing() {
     setIsEditing(!isEditing);
   }
@@ -28,7 +32,11 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
   );
 
   function toggleReplyform() {
-    setShowReplyForm(!showReplyForm);
+    if (isLoggedIn) {
+      setShowReplyForm(!showReplyForm);
+    } else {
+      navigate("/login");
+    }
   }
 
   return (
