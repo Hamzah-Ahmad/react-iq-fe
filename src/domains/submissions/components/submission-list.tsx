@@ -20,7 +20,14 @@ const SubmissionList = () => {
         <Loader height="2.5rem" />
       </div>
     );
-  if (error) return <div>Error</div>;
+  if (error) return <div className="mt-8">Something went wrong</div>;
+
+  if (data && !data.length)
+    return (
+      <div className="mt-8">
+        No solutions have been submitted for this question yet.
+      </div>
+    );
   return (
     <div className="pt-4 max-h-96 overflow-y-scroll scroll-invisible mt-8">
       <Accordion type="single" collapsible className="flex flex-col gap-y-4">
