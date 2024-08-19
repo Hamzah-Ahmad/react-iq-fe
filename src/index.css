@@ -236,6 +236,8 @@
   overflow-y: auto;
   border-radius: 8px;
   min-width: 490px;
+  max-height: 580px;
+  min-height: 580px;
   &::-webkit-scrollbar {
     width: 0px;
   }
@@ -250,6 +252,10 @@
 
   &::-webkit-scrollbar-thumb:hover {
     background: #555;
+  }
+
+  pre {
+    min-height: 100%;
   }
 }
 
