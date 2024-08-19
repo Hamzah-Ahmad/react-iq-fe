@@ -6,7 +6,7 @@ import ReplyBox from "./reply-box";
 import UpdateComment from "./update-comment";
 import CommentActions from "./comment-actions";
 import { useAuth } from "domains/auth/hooks/useAuth";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
   const { useGetReplies, useUpdateComment, useReplyToComment } =
@@ -26,10 +26,10 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
 
   const [showReplyForm, setShowReplyForm] = useState(false);
 
-  const { mutate: updateComment, isPending: isPendingUpdate } = useUpdateComment(toggleIsEditing);
-  const { mutate: replyToComment, isPending: isPendingReply } = useReplyToComment(() =>
-    setShowReplyForm(false)
-  );
+  const { mutate: updateComment, isPending: isPendingUpdate } =
+    useUpdateComment(toggleIsEditing);
+  const { mutate: replyToComment, isPending: isPendingReply } =
+    useReplyToComment(() => setShowReplyForm(false));
 
   function toggleReplyform() {
     if (isLoggedIn) {
@@ -44,7 +44,13 @@ const Comment = ({ comment }: { comment: CommentWithAuthor }) => {
       <div className="border-2 border-secondary p-4 rounded-lg">
         {/* Username, Comment, Edit field */}
         <div className="rounded-md">
-          <div className="font-extrabold">{comment.author?.name}</div>
+          <div className="font-extrabold">
+            {comment.author?.name}
+
+            <small className="font-extralight text-xs ml-2 text-gray-500">
+              {new Date(comment.createdDate)?.toLocaleDateString()}
+            </small>
+          </div>
           {isEditing ? (
             <UpdateComment
               updateComment={updateComment}
