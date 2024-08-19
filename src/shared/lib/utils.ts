@@ -7,6 +7,23 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+
+export function returnErrorString(err: any) {
+  let errMessage = err?.response?.data?.message;
+  let error = "";
+  if (Array.isArray(errMessage)) {
+    error = errMessage[0];
+  } else {
+    if (errMessage === "Unauthorized") {
+      error = "Incorrect email or password";
+    } else {
+      error = errMessage;
+    }
+  }
+  return error || "Something went wrong";
+}
+
+
 const uuidRegex =
   /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 export function isValidUUIDV4(uuid: string): boolean {
