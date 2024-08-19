@@ -38,13 +38,14 @@ const Homepage = () => {
     setIsOpen((prevState) => !prevState);
   }
 
-  if (!questionsList?.length) {
+  if (!questionsList?.length || !questionId) {
     return (
       <div className="h-screen w-full flex justify-center items-center">
         <Spinner />
       </div>
     );
   }
+
   return (
     <>
       <div className="flex items-center justify-between">
@@ -58,9 +59,15 @@ const Homepage = () => {
 
         {auth?.user ? (
           <Popover>
-            <PopoverTrigger className="mr-6 text-sm">Logged in as {auth.user.name}</PopoverTrigger>
+            <PopoverTrigger className="mr-6 text-sm">
+              Logged in as {auth.user.name}
+            </PopoverTrigger>
             <PopoverContent className="bg-background w-fit py-1">
-              <Button variant="link" className="text-foreground" onClick={logout}>
+              <Button
+                variant="link"
+                className="text-foreground"
+                onClick={logout}
+              >
                 Logout
               </Button>
             </PopoverContent>

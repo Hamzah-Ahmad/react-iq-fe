@@ -64,7 +64,7 @@ const styles = {
 render(<Counter label="Counter" />)    
 `;
 const Workspace = () => {
-  const { auth } = useAuth();
+  const { auth, isLoggedIn } = useAuth();
   const [searchParams] = useSearchParams();
 
   const questionId = searchParams.get("questionId") || "";
@@ -105,25 +105,15 @@ const Workspace = () => {
             <LiveError className="rounded-lg bg-red-400 p-2 text-wrap" />
             <LivePreview className="bg-foreground preview flex-1" />
             <Button
-              disabled={isPendingCreateSubmssion}
+              disabled={isPendingCreateSubmssion || !isLoggedIn}
               onClick={submitCode}
               className="w-fill bg-primary col-start-2 justify-self-end mt-3 text-secondary-foreground"
             >
-              Submit
+              {isLoggedIn ? "Submit" : "Sign in to submit"}
             </Button>
           </div>
         </div>
       </LiveProvider>
-      {/* <div className="grid grid-cols-3 gap-4 homepage"> */}
-      {/* <div className="flex justify-end">
-        <Button
-          disabled={isPendingCreateSubmssion}
-          onClick={submitCode}
-          className="bg-primary w-28 col-start-2 justify-self-end mt-3 text-secondary-foreground"
-        >
-          Submit
-        </Button>
-      </div> */}
     </div>
   );
 };

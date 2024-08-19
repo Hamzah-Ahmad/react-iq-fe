@@ -64,6 +64,10 @@ export function notifyError(error: any) {
     toast.warning("Please log in to continue with this action.");
     return;
   }
+  if (respData?.statusCode) {
+    toast.error("Resource not found");
+    return;
+  }
   let message = "";
 
   if (respData?.statusCode >= 500) {
