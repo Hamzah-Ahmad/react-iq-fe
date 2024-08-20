@@ -236,8 +236,6 @@
   overflow-y: auto;
   border-radius: 8px;
   min-width: 490px;
-  max-height: 580px;
-  min-height: 580px;
   &::-webkit-scrollbar {
     width: 0px;
   }
@@ -257,6 +255,12 @@
   pre {
     min-height: 100%;
   }
+}
+
+.description,
+.editor, .preview-container {
+  max-height: 615px;
+  min-height: 615px;
 }
 
 .custom-scroll {

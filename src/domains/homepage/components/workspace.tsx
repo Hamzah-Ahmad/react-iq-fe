@@ -136,7 +136,7 @@ const Workspace = () => {
             onChange={setCode}
           />
 
-          <div className="flex flex-col gap-y-1 relative">
+          <div className="flex flex-col gap-y-1 relative preview-container">
             <LiveError className="rounded-lg bg-red-400 p-2 text-wrap" />
             <LivePreview className="bg-foreground preview flex-1" />
             <Button
