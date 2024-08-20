@@ -1,4 +1,4 @@
-# React IQ
+# React IQ [Frontend]
 
 A platform where users can attempt React machine coding questions, and discuss solutions. 
 
@@ -13,7 +13,7 @@ A platform where users can attempt React machine coding questions, and discuss s
 - React playground implemented using [React Live](https://commerce.nearform.com/open-source/react-live/)
 
 
-## Technology Stack
+## FE Technology Stack
 
 - React.
 - TypeScript.
